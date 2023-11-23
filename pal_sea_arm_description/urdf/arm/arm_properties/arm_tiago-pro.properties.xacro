@@ -56,7 +56,7 @@
 </xacro:macro>
 
 <xacro:macro name="origin_joint_3" params="reflect">
-        <origin xyz="-0.15 -0.02 0" rpy="3.1415 1.5707 0" />
+    <origin xyz="-0.15 -0.02 0" rpy="3.1415 1.5707 0" />
 </xacro:macro>
 
 <xacro:macro name="inertial_link_4" params="reflect">
