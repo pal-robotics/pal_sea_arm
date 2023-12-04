@@ -2,6 +2,14 @@
 Changelog for package pal_sea_arm_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'fix_elbow_joint_limit' into 'master'
+  Fix elbow joint limit
+  See merge request robots/pal_sea_arm!15
+* fix elbow joint limit
+* Contributors: Luca Marchionni, Sai Kishor Kothakota
+
 0.1.3 (2023-10-27)
 ------------------
 * Merge branch 'add/missing_folder' into 'master'
