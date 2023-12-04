@@ -7,11 +7,11 @@ play_motion:
       arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint,
       arm_6_joint, arm_7_joint]
       points:
-      - positions: [1.8557, -1.5919, 0.35538, 1.9818, 0.0, -1.5976, 1.57]
+      - positions: [1.8557, -1.5919, 0.35538, -1.9818, 0.0, -1.5976, 1.57]
         time_from_start: 0.5
-      - positions: [0.36, -1.6008, 0.3489, 1.9818, 0.0, -1.5829, 1.57]
+      - positions: [0.36, -1.6008, 0.3489, -1.9818, 0.0, -1.5829, 1.57]
         time_from_start: 4.0
-      - positions: [0.36, -1.83, 0.47, 2.39, 0.0, -1.5463, 1.72]
+      - positions: [0.36, -1.83, 0.47, -2.39, 0.0, -1.5463, 1.72]
         time_from_start: 7.0
       meta:
         name: Home
