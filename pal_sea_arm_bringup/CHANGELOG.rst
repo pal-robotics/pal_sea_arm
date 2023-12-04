@@ -2,6 +2,14 @@
 Changelog for package pal_sea_arm_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'tpe/fix/standalone_arm_limits' into 'master'
+  Fix motions for the standalone arm + joint 4 Fix elbow joint limit
+  See merge request robots/pal_sea_arm!16
+* Fix motions for the standalone arm + joint 4 Fix elbow joint limit
+* Contributors: Sai Kishor Kothakota, thomas.peyrucain
+
 0.1.4 (2023-12-04)
 ------------------
 
