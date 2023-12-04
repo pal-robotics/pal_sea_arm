@@ -2,8 +2,8 @@
 Changelog for package pal_sea_arm_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.4 (2023-12-04)
+------------------
 * Merge branch 'fix_elbow_joint_limit' into 'master'
   Fix elbow joint limit
   See merge request robots/pal_sea_arm!15
