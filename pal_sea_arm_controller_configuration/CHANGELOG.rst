@@ -2,8 +2,8 @@
 Changelog for package pal_sea_arm_controller_configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.6 (2024-03-11)
+------------------
 * Merge branch 'tpe/fix/remove_config_gazebo_package' into 'master'
   Fix CMakelist
   See merge request robots/pal_sea_arm!22
