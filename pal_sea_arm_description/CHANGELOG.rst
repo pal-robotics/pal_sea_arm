@@ -2,6 +2,9 @@
 Changelog for package pal_sea_arm_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.1.5 (2023-12-04)
 ------------------
 * Merge branch 'tpe/fix/standalone_arm_limits' into 'master'
