@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- 
-  Copyright (c) 2023 PAL Robotics S.L. All rights reserved.
+  Copyright (c) 2024 PAL Robotics S.L. All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
     <xacro:macro name="pal_sea_arm_ros2_control" params="use_sim:=^|false">
 
-    <xacro:arg name="end_effector" default="no-ee"/>
+    <xacro:arg name="end_effector" default="no-end-effector"/>
     <xacro:arg name="ft_sensor" default="no-ft-sensor"/>
 
     <xacro:property name="end_effector" value="$(arg end_effector)" />

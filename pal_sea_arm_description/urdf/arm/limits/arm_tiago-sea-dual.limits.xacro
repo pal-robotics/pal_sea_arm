@@ -8,7 +8,7 @@
   <xacro:property name="arm_k_position" value="20"/>
   <xacro:property name="arm_k_velocity" value="20"/>
 
-  <!-- TODO: Check these values -->
+  <!-- TODO:Check these values -->
   
   <xacro:property name="arm_1_joint_ub" value="90"/>
   <xacro:property name="arm_1_joint_lb" value="-90"/>

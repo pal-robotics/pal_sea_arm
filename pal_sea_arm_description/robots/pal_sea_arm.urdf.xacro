@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- 
-  Copyright (c) 2023 PAL Robotics S.L. All rights reserved.
+  Copyright (c) 2024 PAL Robotics S.L. All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -25,28 +25,35 @@
   <xacro:include filename="$(find pal_sea_arm_description)/urdf/end_effector/end_effector.urdf.xacro"/>
   <xacro:include filename="$(find pal_sea_arm_description)/gazebo/gazebo.urdf.xacro" />
 
+
+  <xacro:arg name="end_effector" default="pal-pro-gripper"/> <!-- no-end-effector, pal-pro-gripper -->
+  <xacro:arg name="ft_sensor" default="rokubi"/> <!-- no-ft-sensor, rokubi-->
+  <xacro:arg name="arm_model" default="pal-sea-arm-standalone"/>
+  <xacro:arg name="use_sim" default="False"/>
+  <xacro:arg name="namespace" default=""/>
+
     <!-- ros2_control -->
   <xacro:include filename="$(find pal_sea_arm_description)/ros2_control/ros2_control.urdf.xacro" />
   <xacro:pal_sea_arm_ros2_control use_sim="$(arg use_sim)" />
 
-  <xacro:arg name="end_effector" default="no-ee"/> <!-- no-ee, pal-pro-gripper -->
-  <xacro:arg name="ft_sensor" default="rokubi"/> <!-- no-ft-sensor, rokubi-->
-  <xacro:arg name="arm_model" default="pal-sea-arm-standalone"/>
-  <xacro:arg name="use_sim" default="false"/>
-  
   <xacro:property name="end_effector" value="$(arg end_effector)" />
   <xacro:property name="ft_sensor" value="$(arg ft_sensor)" />
   <xacro:property name="arm_model" value="$(arg arm_model)" />
+  <xacro:property name="nsp" value="$(arg namespace)" />
 
-  <xacro:if value="${end_effector not in ['no-ee', 'pal-pro-gripper']}">
+
+  <xacro:if value="${end_effector not in ['no-end-effector', 'pal-pro-gripper']}">
     <xacro:wrong_end_effector/>
   </xacro:if>
   <xacro:if value="${ft_sensor not in ['no-ft-sensor', 'rokubi']}">
     <xacro:wrong_ft_sensor/>
   </xacro:if>
+  <xacro:if value="${arm_model not in ['pal-sea-arm-standalone', 'tiago-pro', 'tiago-sea', 'tiago-sea-dual']}">
+    <xacro:wrong_arm_model/>
+  </xacro:if>
 
   <xacro:property name="has_ft_sensor"           value="${ft_sensor != 'no-ft-sensor'}"/>
-  <xacro:property name="has_end_effector"        value="${end_effector not in ['no-ee']}"/>
+  <xacro:property name="has_end_effector"        value="${end_effector not in ['no-end-effector']}"/>
   <xacro:property name="end_effector_link"       value="${'wrist_ft_tool_link' if has_ft_sensor else 'arm_tool_link'}"/>
 
  <!-- Force Torque sensor -->

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-  Copyright (c) 2021 PAL Robotics S.L. All rights reserved.
+  Copyright (c) 2024 PAL Robotics S.L. All rights reserved.
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -41,28 +41,30 @@
   </xacro:if>
 
   <!-- Custom -->
-  <xacro:if value="${type == 'custom' and not is_dual}">
+  <!-- <xacro:if value="${type == 'custom' and not is_dual}">
     <xacro:include filename="$(find custom_ee_description)/urdf/end-effector.urdf.xacro" />
     <xacro:end_effector parent="${parent}">
       <origin xyz="0.0 0 0" rpy="0 0 0"/>
     </xacro:end_effector>
-  </xacro:if>
+  </xacro:if> -->
 
   <!-- Custom dual-->
-  <xacro:if value="${type == 'custom' and is_dual}">
-    <xacro:if value="${reflect == 1}"> <!-- If right -->
+  <!-- <xacro:if value="${type == 'custom' and is_dual}"> -->
+   <!-- If right -->
+    <!-- <xacro:if value="${reflect == 1}">
     <xacro:include filename="$(find custom_dual_ee_description)/urdf/end-effector-right.urdf.xacro" />
     <xacro:end_effector_right parent="${parent}">
       <origin xyz="0.0 0 0" rpy="0 0 0"/>
     </xacro:end_effector_right>
-    </xacro:if>
-    <xacro:if value="${reflect == -1}"> <!-- If left -->
+    </xacro:if> -->
+     <!-- If left -->
+    <!-- <xacro:if value="${reflect == -1}">
     <xacro:include filename="$(find custom_dual_ee_description)/urdf/end-effector-left.urdf.xacro" />
     <xacro:end_effector_left parent="${parent}">
       <origin xyz="0.0 0 0" rpy="0 0 0"/>
     </xacro:end_effector_left>
     </xacro:if>
-  </xacro:if>
+  </xacro:if> -->
 
   </xacro:macro>
 

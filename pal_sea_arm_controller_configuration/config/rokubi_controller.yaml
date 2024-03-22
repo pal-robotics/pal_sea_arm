@@ -1,0 +1,4 @@
+${FT_SIDE_PREFIX}_controller:
+  ros__parameters:
+    frame_id: ${WRIST_SIDE_PREFIX}_link
+    sensor_name: ${WRIST_SIDE_PREFIX}_sensor

@@ -1,13 +1,13 @@
-arm_controller:
+${ARM_SIDE_PREFIX}_controller:
   ros__parameters:
     joints:
-      - arm_1_joint
-      - arm_2_joint
-      - arm_3_joint
-      - arm_4_joint
-      - arm_5_joint
-      - arm_6_joint
-      - arm_7_joint
+      - ${ARM_SIDE_PREFIX}_1_joint
+      - ${ARM_SIDE_PREFIX}_2_joint
+      - ${ARM_SIDE_PREFIX}_3_joint
+      - ${ARM_SIDE_PREFIX}_4_joint
+      - ${ARM_SIDE_PREFIX}_5_joint
+      - ${ARM_SIDE_PREFIX}_6_joint
+      - ${ARM_SIDE_PREFIX}_7_joint
     command_interfaces:
       - position
     state_interfaces:
@@ -16,17 +16,17 @@ arm_controller:
     constraints:
       goal_time: 0.6
       stopped_velocity_tolerance: 5.0
-      arm_1_joint:
+      ${ARM_SIDE_PREFIX}_1_joint:
         goal: 0.02
-      arm_2_joint:
+      ${ARM_SIDE_PREFIX}_2_joint:
         goal: 0.02
-      arm_3_joint:
+      ${ARM_SIDE_PREFIX}_3_joint:
         goal: 0.02
-      arm_4_joint:
+      ${ARM_SIDE_PREFIX}_4_joint:
         goal: 0.02
-      arm_5_joint:
+      ${ARM_SIDE_PREFIX}_5_joint:
         goal: 0.02
-      arm_6_joint:
+      ${ARM_SIDE_PREFIX}_6_joint:
         goal: 0.02
-      arm_7_joint:
+      ${ARM_SIDE_PREFIX}_7_joint:
         goal: 0.02
