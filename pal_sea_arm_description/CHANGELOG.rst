@@ -2,8 +2,8 @@
 Changelog for package pal_sea_arm_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.3 (2024-03-22)
+------------------
 * Merge branch 'dtk/fix/restructure' into 'humble-devel'
   Dtk/fix/restructure
   See merge request robots/pal_sea_arm!23
