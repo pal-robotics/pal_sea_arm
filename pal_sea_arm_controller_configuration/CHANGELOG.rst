@@ -2,6 +2,19 @@
 Changelog for package pal_sea_arm_controller_configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'dtk/fix/restructure' into 'humble-devel'
+  Dtk/fix/restructure
+  See merge request robots/pal_sea_arm!23
+* Update copyright year
+* Remove unused imports for flake test
+* Refactor arm_controller
+* Remove unused default_safety_parameters
+* Create force-torque sensor related launch file
+* Restructure launch files
+* Contributors: David ter Kuile, Noel Jimenez, davidterkuile
+
 1.0.2 (2024-03-07)
 ------------------
 
