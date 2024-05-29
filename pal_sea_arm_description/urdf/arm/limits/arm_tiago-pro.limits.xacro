@@ -25,8 +25,8 @@
   <xacro:property name="arm_6_joint_ub" value="114.59" />
   <xacro:property name="arm_6_joint_lb" value="-114.59" />
 
-  <xacro:property name="arm_7_joint_ub" value="148.97" />
-  <xacro:property name="arm_7_joint_lb" value="-148.97" />
+  <xacro:property name="arm_7_joint_ub" value="139.8" />
+  <xacro:property name="arm_7_joint_lb" value="-139.8" />
 
   <xacro:property name="arm_1_max_velocity"      value="1.95" />
   <xacro:property name="arm_2_max_velocity"      value="1.95" />
