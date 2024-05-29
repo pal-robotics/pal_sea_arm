@@ -2,6 +2,9 @@
 Changelog for package pal_sea_arm_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.1.6 (2024-03-11)
 ------------------
 

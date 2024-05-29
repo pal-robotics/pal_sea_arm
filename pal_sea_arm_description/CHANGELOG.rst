@@ -2,6 +2,14 @@
 Changelog for package pal_sea_arm_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'dtk/fix/joint-7-joint-limit-tiago-pro' into 'master'
+  Update joint limit for joint 7 tiago pro
+  See merge request robots/pal_sea_arm!29
+* Update joint limit for joint 7 tiago pro
+* Contributors: David ter Kuile, davidterkuile
+
 0.1.6 (2024-03-11)
 ------------------
 
