@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>pal_sea_arm</name>
-  <version>0.1.7</version>
+  <version>0.1.8</version>
   <description>The pal_sea_arm package</description>
 
   <maintainer email="narcis.miguel@pal-robotics.com">Narcis Miguel</maintainer>
