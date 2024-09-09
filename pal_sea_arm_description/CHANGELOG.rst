@@ -2,6 +2,14 @@
 Changelog for package pal_sea_arm_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'ipe/update-limit-4' into 'master'
+  update limit joint 4
+  See merge request robots/pal_sea_arm!39
+* update limit joint 4
+* Contributors: davidterkuile, ileniaperrella
+
 0.1.7 (2024-05-29)
 ------------------
 * Merge branch 'dtk/fix/joint-7-joint-limit-tiago-pro' into 'master'
