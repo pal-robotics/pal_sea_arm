@@ -2,8 +2,8 @@
 Changelog for package pal_sea_arm_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.9 (2024-09-12)
+------------------
 * Merge branch 'ipe/sea-transmiss-depend' into 'master'
   add sea_transmission dependency with condition
   See merge request robots/pal_sea_arm!40
