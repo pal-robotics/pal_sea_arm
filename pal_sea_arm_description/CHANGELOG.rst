@@ -2,6 +2,16 @@
 Changelog for package pal_sea_arm_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'ipe/sea-transmiss-depend' into 'master'
+  add sea_transmission dependency with condition
+  See merge request robots/pal_sea_arm!40
+* fix typo
+* update package format
+* add sea_transmission dependency with condition
+* Contributors: davidterkuile, ileniaperrella
+
 0.1.8 (2024-09-09)
 ------------------
 * Merge branch 'ipe/update-limit-4' into 'master'
