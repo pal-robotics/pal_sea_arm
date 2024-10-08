@@ -1,0 +1,48 @@
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Constant parameters -->
+  <xacro:property name="arm_friction"       value="1.0" />
+  <xacro:property name="arm_damping"        value="1.0" />
+
+  <xacro:property name="arm_k_position" value="20"/>
+  <xacro:property name="arm_k_velocity" value="20"/>
+
+  <xacro:property name="arm_1_joint_ub" value="${30 if first_joint_reflect is 1 else 270}" />
+  <xacro:property name="arm_1_joint_lb" value="${-270 if first_joint_reflect is 1 else -30}" />
+
+
+  <xacro:property name="arm_2_joint_ub" value="63.03" />
+  <xacro:property name="arm_2_joint_lb" value="-139.8" />
+
+  <xacro:property name="arm_3_joint_ub" value="148.97" />
+  <xacro:property name="arm_3_joint_lb" value="-148.97" />
+
+  <xacro:property name="arm_4_joint_ub" value="63.03" />
+  <xacro:property name="arm_4_joint_lb" value="-139.8" />
+
+  <xacro:property name="arm_5_joint_ub" value="210" />
+  <xacro:property name="arm_5_joint_lb" value="-90" />
+  <xacro:property name="arm_6_joint_ub" value="172" />
+  <xacro:property name="arm_6_joint_lb" value="-108" />
+  <xacro:property name="arm_7_joint_ub" value="148.5" />
+  <xacro:property name="arm_7_joint_lb" value="-148.5" />
+
+
+  <xacro:property name="arm_1_max_velocity"      value="1.95" />
+  <xacro:property name="arm_2_max_velocity"      value="1.95" />
+  <xacro:property name="arm_3_max_velocity"      value="2.35" />
+  <xacro:property name="arm_4_max_velocity"      value="2.35" />
+  <xacro:property name="arm_5_max_velocity"      value="2.35" />
+  <xacro:property name="arm_6_max_velocity"      value="2.35" />
+  <xacro:property name="arm_7_max_velocity"      value="2.35" />
+
+  <xacro:property name="arm_1_max_effort"   value="43.0" />
+  <xacro:property name="arm_2_max_effort"   value="43.0" />
+  <xacro:property name="arm_3_max_effort"   value="26" />
+  <xacro:property name="arm_4_max_effort"   value="26" />
+  <xacro:property name="arm_5_max_effort"   value="26" />
+  <xacro:property name="arm_6_max_effort"   value="26" />
+  <xacro:property name="arm_7_max_effort"   value="26" />
+
+
+</robot>

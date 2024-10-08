@@ -18,7 +18,7 @@
   <!-- Transmissions file -->
   <xacro:include filename="$(find pal_sea_arm_description)/urdf/arm/arm.transmission.xacro"/>
 
-  <xacro:macro name="pal_sea_arm" params="name parent *origin arm_model reflect:=1 arm_1_offset arm_2_offset arm_3_offset arm_4_offset arm_5_offset arm_6_offset arm_7_offset
+  <xacro:macro name="pal_sea_arm" params="name parent *origin arm_model reflect:=1 first_joint_reflect:=1 arm_1_offset arm_2_offset arm_3_offset arm_4_offset arm_5_offset arm_6_offset arm_7_offset
                                           no_safety_eps:=False joint_limits_file:='$(find pal_sea_arm_description)/urdf/arm/limits/arm_${arm_model}.limits.xacro'
                                           arm_properties_file:='$(find pal_sea_arm_description)/urdf/arm/arm_properties/arm_${arm_model}.properties.xacro'">
     <xacro:property name="arm_eps"       value="${0.00 if no_safety_eps else 0.07}"/>
@@ -34,6 +34,10 @@
       <xacro:property name="mesh_folder"       value="arm_tiago_pro"/>
     </xacro:if>
 
+    <xacro:if value="${arm_model in ['tiago-pro-inria']}">
+      <xacro:property name="mesh_folder"       value="arm_tiago_pro_inria"/>
+    </xacro:if>
+    
     <xacro:if value="${arm_model in ['tiago-sea', 'tiago-sea-dual']}">
       <xacro:property name="mesh_folder"       value="arm_tiago_sea"/>
     </xacro:if>
@@ -77,8 +81,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://pal_sea_arm_description/meshes/${mesh_folder}/arm_2_link.stl"
-          scale="1 1 ${reflect}" />
+          <mesh filename="package://pal_sea_arm_description/meshes/${mesh_folder}/arm_2_link.stl" scale="1 1 ${reflect}" />
         </geometry>
         <material name="pal/DarkGrey"/>
       </visual>
