@@ -1,10 +1,10 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Joint limits -->
-  <xacro:property name="arm_5_joint_ub" value="150" />
-  <xacro:property name="arm_5_joint_lb" value="-150" />
-  <xacro:property name="arm_6_joint_ub" value="115" />
-  <xacro:property name="arm_6_joint_lb" value="-115" />
+  <xacro:property name="arm_5_joint_ub" value="${210 if joint_reflect == 1 else 90}" />
+  <xacro:property name="arm_5_joint_lb" value="${-90 if joint_reflect == 1 else -210}" />
+  <xacro:property name="arm_6_joint_ub" value="120" />
+  <xacro:property name="arm_6_joint_lb" value="-120" />
   <xacro:property name="arm_7_joint_ub" value="150" />
   <xacro:property name="arm_7_joint_lb" value="-150" />
 
