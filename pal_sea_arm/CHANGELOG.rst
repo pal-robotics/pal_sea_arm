@@ -5,6 +5,11 @@ Changelog for package pal_sea_arm
 1.0.3 (2024-03-22)
 ------------------
 
+Forthcoming
+-----------
+* bump to version 1.18.8 in order to fix the not merged and released 1.18.7
+* Contributors: ileniaperrella
+
 1.18.7 (2025-08-01)
 -------------------
 
