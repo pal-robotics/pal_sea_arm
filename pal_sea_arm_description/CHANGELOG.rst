@@ -23,8 +23,8 @@ Changelog for package pal_sea_arm_description
 * Add arm model check in urdf
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
-Forthcoming
------------
+1.18.9 (2026-02-03)
+-------------------
 * bump to version 1.18.8 in order to fix the not merged and released 1.18.7
 * update limit for straight wrist
 * Contributors: ileniaperrella
