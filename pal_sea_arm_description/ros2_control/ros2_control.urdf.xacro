@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- 
+<!--
   Copyright (c) 2024 PAL Robotics S.L. All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
  -->
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="pal_sea_arm">
 
-  <xacro:macro name="pal_sea_arm_ros2_control" params="use_sim_time:=^|false torque_estimation:=false sim_type:=gazebo gazebo_version:=classic">
+  <xacro:macro name="pal_sea_arm_ros2_control" params="use_sim_time:=^|false torque_estimation:=false sim_type:=^|gazebo gazebo_version:=classic">
 
     <xacro:arg name="end_effector" default="no-end-effector"/>
     <xacro:arg name="ft_sensor" default="no-ft-sensor"/>
@@ -40,7 +40,10 @@
       <hardware>
         <xacro:if value="$(arg use_sim_time)">
           <xacro:if value="${sim_type == 'mujoco-ros2-control'}">
-            <plugin>mujoco_ros2_control/MujocoSystem</plugin>
+            <plugin>mujoco_ros2_control/MujocoSystemInterface</plugin>
+            <!-- Override the slowdown settings in the Simulate App and run at 1x speed -->
+            <param name="sim_speed_factor">1.0</param>
+            <!-- <param name="pids_config_file">$(find pal_sea_arm_mujoco)/config/pids.yaml</param> -->
           </xacro:if>
           <xacro:if value="${sim_type == 'gazebo'}">
             <xacro:if value="${gazebo_version == 'classic'}">
@@ -50,7 +53,7 @@
               <plugin>gz_ros2_control/GazeboSimSystem</plugin>
             </xacro:if>
           </xacro:if>
-        </xacro:if> 
+        </xacro:if>
         <xacro:unless value="$(arg use_sim_time)">
           <plugin>robot_control/RobotControl</plugin>
           <param name="error_protection">true</param>
