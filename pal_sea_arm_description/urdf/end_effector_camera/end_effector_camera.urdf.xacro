@@ -25,9 +25,13 @@
   -->
   <xacro:macro name="pal_sea_arm_end_effector_camera" params="name parent type camera_position">
 
+    <xacro:include filename="$(find pal_urdf_utils)/urdf/camera/realsense_d435.urdf.xacro" />
+    <xacro:include filename="$(find pal_urdf_utils)/urdf/camera/realsense_d435i.urdf.xacro" />
+    <xacro:include filename="$(find pal_urdf_utils)/urdf/camera/realsense_d405.urdf.xacro" />
+
     <!-- Realsense D405 -->
     <xacro:if value="${type == 'realsense-d405'}">
-      <link name="${name}_camera_link">
+      <link name="${name}_camera_support_link">
         <inertial>
           <origin xyz="-7.7517E-05 -0.00017089 0.003965" rpy="0 0 0"/>
           <mass
@@ -40,7 +44,7 @@
         <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="package://pal_sea_arm_description/meshes/arm_tiago_pro/end_effector_camera_realsense_d405.stl" />
+            <mesh filename="package://pal_sea_arm_description/meshes/arm_tiago_pro/camera_support_for_d405.stl" />
           </geometry>
           <material name="">
             <color rgba="0.75294 0.75294 0.75294 1" />
@@ -49,14 +53,31 @@
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="package://pal_sea_arm_description/meshes/arm_tiago_pro/end_effector_camera_realsense_d405.stl" />
+            <mesh filename="package://pal_sea_arm_description/meshes/arm_tiago_pro/camera_support_for_d405.stl" />
           </geometry>
         </collision>
       </link>
+
+      <joint name="${name}_camera_joint" type="fixed">
+        <xacro:if value="${camera_position == 'up'}">
+          <origin xyz="0.0406 0 -0.003" rpy="0 0 1.5708" />
+        </xacro:if>
+        <xacro:if value="${camera_position == 'down'}">
+          <origin xyz="-0.0406 0 -0.003" rpy="0 0 -1.5708" />
+        </xacro:if>
+        <parent link="${parent}" />
+        <child link="${name}_camera_support_link" />
+        <axis xyz="0 0 0" />
+      </joint>
+
+      <xacro:realsense_d405 parent="${name}_camera_support_link" name="${name}_front_camera" use_nominal_extrinsics="${use_sim_time}">
+        <origin xyz="0.0 -0.005 0.00835" rpy="-3.14159 -1.578 -1.578"/>
+      </xacro:realsense_d405>
+
     </xacro:if>
 
-    <xacro:if value="${type == 'realsense-d435'}">
-      <link name="${name}_camera_link">
+    <xacro:if value="${type in ['realsense-d435','realsense-d435i']}">
+      <link name="${name}_camera_support_link">
         <inertial>
           <origin xyz="-7.7517E-05 -0.00017089 0.003965" rpy="0 0 0"/>
           <mass
@@ -69,7 +90,7 @@
         <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="package://pal_sea_arm_description/meshes/arm_tiago_pro/end_effector_camera_realsense_d435.stl" />
+            <mesh filename="package://pal_sea_arm_description/meshes/arm_tiago_pro/camera_support_for_d435.stl" />
           </geometry>
           <material name="">
             <color rgba="0.75294 0.75294 0.75294 1" />
@@ -78,52 +99,37 @@
         <collision>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
-            <mesh filename="package://pal_sea_arm_description/meshes/arm_tiago_pro/end_effector_camera_realsense_d435.stl" />
+            <mesh filename="package://pal_sea_arm_description/meshes/arm_tiago_pro/camera_support_for_d435.stl" />
           </geometry>
         </collision>
       </link>
-    </xacro:if>
 
-    <xacro:if value="${type == 'realsense-d435i'}">
-      <link name="${name}_camera_link">
-        <inertial>
-          <origin xyz="-7.7517E-05 -0.00017089 0.003965" rpy="0 0 0"/>
-          <mass
-            value="0.05792613" />
-          <inertia
-            ixx="2.7273E-05" ixy="2.443E-07" ixz="-1.725E-09"
-            iyy="8.09E-06" iyz="-2.777E-09"
-            izz="2.73583E-05" />
-        </inertial>
-        <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
-          <geometry>
-            <mesh filename="package://pal_sea_arm_description/meshes/arm_tiago_pro/end_effector_camera_realsense_d435.stl" />
-          </geometry>
-          <material name="">
-            <color rgba="0.75294 0.75294 0.75294 1" />
-          </material>
-        </visual>
-        <collision>
-          <origin xyz="0 0 0" rpy="0 0 0" />
-          <geometry>
-            <mesh filename="package://pal_sea_arm_description/meshes/arm_tiago_pro/end_effector_camera_realsense_d435.stl" />
-          </geometry>
-        </collision>
-      </link>
-    </xacro:if>
+      <joint name="${name}_camera_joint" type="fixed">
+        <xacro:if value="${camera_position == 'up'}">
+          <origin xyz="0.0406 0 -0.003" rpy="0 0 1.5708" />
+        </xacro:if>
+        <xacro:if value="${camera_position == 'down'}">
+          <origin xyz="-0.0406 0 -0.003" rpy="0 0 -1.5708" />
+        </xacro:if>
+        <parent link="${parent}" />
+        <child link="${name}_camera_support_link" />
+        <axis xyz="0 0 0" />
+      </joint>
 
-    <joint name="${name}_camera_joint" type="fixed">
-      <xacro:if value="${camera_position == 'up'}">
-        <origin xyz="0.0406 0 -0.003" rpy="3.1416 -1.5708 0" />
+
+      <xacro:if value="${type == 'realsense-d435'}">
+        <xacro:realsense_d435 parent="${name}_camera_support_link" name="${name}_front_camera" use_nominal_extrinsics="${use_sim_time}">
+          <origin xyz="0.0 -0.0119 0.01015" rpy="-3.14159 -1.578 -1.578" />
+        </xacro:realsense_d435>
       </xacro:if>
-      <xacro:if value="${camera_position == 'down'}">
-        <origin xyz="-0.0406 0 -0.003" rpy="0 -1.5708 0" />
+      <xacro:if value="${type == 'realsense-d435i'}">
+        <xacro:realsense_d435i parent="${name}_camera_support_link" name="${name}_front_camera" use_nominal_extrinsics="${use_sim_time}">
+          <origin xyz="0.0 -0.0119 0.01015" rpy="-3.14159 -1.578 -1.578" />
+        </xacro:realsense_d435i>
       </xacro:if>
-      <parent link="${parent}" />
-      <child link="${name}_camera_link" />
-      <axis xyz="0 0 0" />
-    </joint>    
+
+
+    </xacro:if>
 
   </xacro:macro>
 
