@@ -43,7 +43,7 @@
             <plugin>mujoco_ros2_control/MujocoSystemInterface</plugin>
             <!-- Override the slowdown settings in the Simulate App and run at 1x speed -->
             <param name="sim_speed_factor">1.0</param>
-            <!-- <param name="pids_config_file">$(find pal_sea_arm_mujoco)/config/pids.yaml</param> -->
+            <param name="pids_config_file">$(find pal_sea_arm_mujoco)/config/pids.yaml</param>
           </xacro:if>
           <xacro:if value="${sim_type == 'gazebo'}">
             <xacro:if value="${gazebo_version == 'classic'}">

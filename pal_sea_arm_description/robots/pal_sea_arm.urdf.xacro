@@ -262,6 +262,15 @@
           <modify_element type="joint" name="gripper_fingertip_left_joint" actuatorfrcrange="-8 8"/>
           <modify_element type="joint" name="gripper_fingertip_right_joint" actuatorfrcrange="-8 8"/>
           <modify_element type="joint" name="gripper_finger_joint" actuatorfrcrange="-8 8" damping="1.5"/>
+
+          <modify_element type="joint" name="arm_1_joint" damping="10"/>
+          <modify_element type="joint" name="arm_2_joint" damping="10"/>
+          <modify_element type="joint" name="arm_3_joint" damping="10"/>
+          <modify_element type="joint" name="arm_4_joint" damping="10"/>
+          <modify_element type="joint" name="arm_5_joint" damping="10"/>
+          <modify_element type="joint" name="arm_6_joint" damping="10"/>
+          <modify_element type="joint" name="arm_7_joint" damping="10"/>
+
         </xacro:if>
       </processed_inputs>
     </mujoco_inputs>  
