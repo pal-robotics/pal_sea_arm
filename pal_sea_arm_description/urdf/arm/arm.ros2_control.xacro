@@ -33,11 +33,10 @@
       <state_interface name="effort" />
 
       <!-- SEA specific joint interfaces -->
-      <xacro:if value="${use_sea_transmission and sim_type != 'mujoco-ros2-control'}">
+      <xacro:if value="${use_sea_transmission}">
         <state_interface name="torque"/>
         <state_interface name="absolute_position"/>
       </xacro:if>
-
     </joint>
 
     <xacro:include filename="$(find pal_sea_arm_description)/ros2_control/transmissions.urdf.xacro" />

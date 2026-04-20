@@ -129,7 +129,7 @@
   <joint name="base_joint" type="fixed">
     <origin xyz="0 0 -0.08" rpy="0 0 0"/>
     <parent link="world"/>
-    <child link="base_link"/>        
+    <child link="base_link"/>
   </joint>
 
   <link name="base_link">
@@ -196,6 +196,7 @@
   </xacro:if>
 
   <!-- ROS2 control -->
-  <xacro:pal_sea_arm_ros2_control use_sim_time="$(arg use_sim_time)" torque_estimation="${torque_estimation}" gazebo_version="${gazebo_version}"/>
-
+  <xacro:if value="${sim_type != 'mujoco'}">
+    <xacro:pal_sea_arm_ros2_control use_sim_time="$(arg use_sim_time)" torque_estimation="${torque_estimation}" sim_type="${sim_type}" gazebo_version="${gazebo_version}"/>
+  </xacro:if>
 </robot>
