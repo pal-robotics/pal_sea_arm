@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="pal_sea_arm">
-  
+
     <!-- Actuators -->
-    <xacro:macro name="mj_arm_actuators" params="name arm_type wrist_model joint_reflect">
+    <xacro:macro name="mj_arm_actuators" params="name arm_type wrist_model joint_reflect mj_control">
 
       <xacro:include filename="$(find pal_sea_arm_description)/urdf/arm/arm_limits/${arm_type}/arm.limits.xacro"/>
       <xacro:include filename="$(find pal_sea_arm_description)/urdf/arm/arm_limits/${arm_type}/${wrist_model}.limits.xacro"/>
