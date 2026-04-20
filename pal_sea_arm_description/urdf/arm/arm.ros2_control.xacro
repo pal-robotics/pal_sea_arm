@@ -41,15 +41,13 @@
 
     <xacro:include filename="$(find pal_sea_arm_description)/ros2_control/transmissions.urdf.xacro" />
 
-    <xacro:if value="${sim_type != 'mujoco-ros2-control'}">
-      <xacro:if value="${use_sea_transmission}">
-        <!-- Reduction needed for the torque estimation -->
-        <xacro:sea_transmission name="${name}" reduction="${reduction}" offset_value="${offset_value}" />
-      </xacro:if>
-      <xacro:unless value="${use_sea_transmission}">
-        <!-- Reduction already applied in the RT layer, harcoded here to 1.0 -->
-        <xacro:simple_transmission name="${name}" reduction="1.0" offset_value="${offset_value}" />
-      </xacro:unless>
+    <xacro:if value="${use_sea_transmission}">
+      <!-- Reduction needed for the torque estimation -->
+      <xacro:sea_transmission name="${name}" reduction="${reduction}" offset_value="${offset_value}" sim_type="${sim_type}" />
     </xacro:if>
+    <xacro:unless value="${use_sea_transmission}">
+      <!-- Reduction already applied in the RT layer, harcoded here to 1.0 -->
+      <xacro:simple_transmission name="${name}" reduction="1.0" offset_value="${offset_value}" sim_type="${sim_type}" />
+    </xacro:unless>
   </xacro:macro>
 </robot>
