@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- 
+<!--
   Copyright (c) 2024 PAL Robotics S.L. All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,12 +42,13 @@
   <xacro:arg name="namespace" default=""/>
   <xacro:arg name="gazebo_version" default="classic"/>
 
-  <!-- mujoco-ros2-control, mujoco, gazebo, no-simulation -->
+  <!-- mujoco-ros2-control, mujoco, gazebo-->
   <xacro:arg name="sim_type" default="gazebo" />
 
   <!-- false, position, motor -->
   <xacro:arg name="mj_control" default="position" />
 
+  <!-- floor -->
   <xacro:arg name="world_name" default="floor" />
 
   <!-- Limits v2-->
@@ -64,7 +65,7 @@
   <xacro:property name="gazebo_version" value="$(arg gazebo_version)"/>
   <xacro:property name="limits_v2" value="$(arg limits_v2)"/>
 
-  <xacro:property name="sim_type" value="$(arg sim_type)" /> 
+  <xacro:property name="sim_type" value="$(arg sim_type)" />
   <xacro:property name="mj_control" value="$(arg mj_control)"/>
   <xacro:property name="world_name" value="$(arg world_name)"/>
 
@@ -80,6 +81,13 @@
   <xacro:if value="${arm_type not in ['pal-sea-arm-standalone', 'tiago-pro', 'tiago-pro-s',  'tiago-sea', 'tiago-sea-dual']}">
     <xacro:wrong_arm_type/>
   </xacro:if>
+   <!-- Properties check -->
+  <xacro:if value="${sim_type not in ['mujoco-ros2-control', 'mujoco', 'gazebo']}">
+    <xacro:wrong_sim_type />
+  </xacro:if>
+  <xacro:unless value="$(arg use_sim_time)">
+    <xacro:property name="sim_type" value="gazebo" />
+  </xacro:unless>
 
   <!-- Compatibility check within TC and ft sensors-->
   <!-- <xacro:if value="${ft_sensor == 'rokubi' and wrist_model=='spherical-wrist'}">
