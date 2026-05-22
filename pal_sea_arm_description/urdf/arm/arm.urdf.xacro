@@ -420,7 +420,7 @@
 
   </xacro:macro>
 
-  <xacro:macro name="pal_sea_arm_mj" params="mj_control world_name">
+  <xacro:macro name="pal_sea_arm_mj" params="mj_control world_name has_end_effector">
     <!-- Mujoco Includes -->
     <xacro:include filename="$(find pal_sea_arm_description)/mujoco/mj_tags.xacro" />
     <xacro:include filename="$(find pal_pro_gripper_description)/mujoco/mj_tags.xacro" />

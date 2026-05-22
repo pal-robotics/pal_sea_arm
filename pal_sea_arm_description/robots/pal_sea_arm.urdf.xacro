@@ -201,7 +201,7 @@
 
   <!-- MUJOCO   -->
   <xacro:if value="${sim_type in ['mujoco', 'mujoco-ros2-control']}">
-    <xacro:pal_sea_arm_mj world_name="${world_name}" mj_control="${mj_control}"/>
+    <xacro:pal_sea_arm_mj world_name="${world_name}" mj_control="${mj_control}" has_end_effector="${has_end_effector}"/>
   </xacro:if>
 
   <!-- ROS2 control -->
