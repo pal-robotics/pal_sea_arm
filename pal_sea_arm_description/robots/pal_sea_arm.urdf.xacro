@@ -115,13 +115,13 @@
   <!-- ROBOT DEFINITION -->
   <link name="world"></link>
 
-  <joint name="world_fixed" type="fixed">
-    <origin xyz="0 0 -0.09" rpy="0 0 0"/>
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0 0 -0.08" rpy="0 0 0"/>
     <parent link="world"/>
-    <child link="arm_root_link"/>        
+    <child link="base_link"/>        
   </joint>
 
-  <link name="arm_root_link">
+  <link name="base_link">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.01" />
@@ -129,9 +129,45 @@
     </inertial>
   </link>
 
+  <!-- ARM ROOT LINK -->
+  <joint name="arm_root_joint" type="fixed">
+    <origin xyz="0 0 0.131" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="arm_root_link"/>
+  </joint>
+
+  <link name="arm_root_link">
+    <inertial>
+      <origin xyz="-2.3588E-05 0.0015892 0.056605" rpy="0 0 0" />
+      <mass value="1.6168"/>
+      <inertia ixx="0.0042498" ixy="-5.8047E-07" ixz="-9.9114E-07" iyy="0.0041293" iyz="-0.00026598" izz="0.0053829" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57 0 0 " />
+      <geometry>
+        <mesh filename="package://pal_sea_arm_description/meshes/pal_sea_arm_standalone/base_link.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.89412 0.91373 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.57 0 0" />
+      <geometry>
+        <mesh filename="package://pal_sea_arm_description/meshes/pal_sea_arm_standalone/base_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo reference="arm_root_link">
+    <material>Gazebo/DarkGrey</material>
+    <mu1>0.9</mu1>
+    <mu2>0.9</mu2>
+  </gazebo>
+
   <!-- ARM -->
   <xacro:pal_sea_arm name="arm" parent="arm_root_link" arm_type="${arm_type}" tool_changer="${tool_changer}" wrist_model="${wrist_model}" reflect="1" arm_1_offset="0" arm_2_offset="0" arm_3_offset="0" arm_4_offset="0" arm_5_offset="0" arm_6_offset="0" arm_7_offset="0" limits_v2="${limits_v2}">
-    <origin xyz="0 0 0" rpy="0 0 0" />
+    <origin xyz="0 0 0" rpy="0 0 0.5236" />
   </xacro:pal_sea_arm>
 
   <!-- Force Torque sensor-->
