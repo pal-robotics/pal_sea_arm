@@ -17,6 +17,9 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
+  <!-- Pass with_sc:=true to add simplified capsule collision links on arm links 3, 5, 7 -->
+  <xacro:arg name="with_sc" default="false"/>
+
   <xacro:macro name="pal_sea_arm" params="name parent *origin arm_type tool_changer wrist_model reflect:=1 joint_reflect:=1 arm_1_offset arm_2_offset arm_3_offset arm_4_offset arm_5_offset arm_6_offset arm_7_offset no_safety_eps:=False limits_v2:=False">
 
     <!-- PROPERTIES -->
@@ -174,6 +177,29 @@
         <dynamics friction="${arm_friction}" damping="${arm_damping}"/>
     </joint>
 
+    <!-- ARM 3 SC LINK — simplified capsule (R=55mm, L=420mm) for MPC collision avoidance -->
+    <xacro:if value="${'$(arg with_sc)' == 'true'}">
+      <link name="${name}_3_link_sc">
+        <collision>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry><cylinder radius="0.055" length="0.330"/></geometry>
+        </collision>
+        <collision>
+          <origin xyz="0 0 0.165" rpy="0 0 0"/>
+          <geometry><sphere radius="0.055"/></geometry>
+        </collision>
+        <collision>
+          <origin xyz="0 0 -0.165" rpy="0 0 0"/>
+          <geometry><sphere radius="0.055"/></geometry>
+        </collision>
+      </link>
+      <joint name="${name}_3_link_sc_joint" type="fixed">
+        <parent link="${name}_3_link"/>
+        <child link="${name}_3_link_sc"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </joint>
+    </xacro:if>
+
     <!-- ARM 4 LINK -->
     <link name="${name}_4_link">
       <xacro:inertial_link_4 reflect="${reflect}"/>
@@ -247,6 +273,29 @@
       <dynamics friction="${arm_friction}" damping="${arm_damping}"/>
     </joint>
 
+    <!-- ARM 5 SC LINK — simplified capsule (R=55mm, L=420mm) for MPC collision avoidance -->
+    <xacro:if value="${'$(arg with_sc)' == 'true'}">
+      <link name="${name}_5_link_sc">
+        <collision>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry><cylinder radius="0.055" length="0.330"/></geometry>
+        </collision>
+        <collision>
+          <origin xyz="0 0 0.165" rpy="0 0 0"/>
+          <geometry><sphere radius="0.055"/></geometry>
+        </collision>
+        <collision>
+          <origin xyz="0 0 -0.165" rpy="0 0 0"/>
+          <geometry><sphere radius="0.055"/></geometry>
+        </collision>
+      </link>
+      <joint name="${name}_5_link_sc_joint" type="fixed">
+        <parent link="${name}_5_link"/>
+        <child link="${name}_5_link_sc"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </joint>
+    </xacro:if>
+
     <xacro:unless value="${wrist_model == 'short-wrist'}">
       <!-- ARM 6 LINK -->
       <link name="${name}_6_link">
@@ -305,6 +354,29 @@
         <dynamics friction="${arm_friction}" damping="${arm_damping}"/>
         <safety_controller k_position="${arm_k_position}" k_velocity="${arm_k_velocity}" soft_lower_limit="${arm_7_joint_lb * deg_to_rad  + arm_eps}" soft_upper_limit="${arm_7_joint_ub * deg_to_rad - arm_eps}" />
       </joint>
+
+      <!-- ARM 7 SC LINK — simplified capsule (R=40mm, L=300mm) for MPC collision avoidance -->
+      <xacro:if value="${'$(arg with_sc)' == 'true'}">
+        <link name="${name}_7_link_sc">
+          <collision>
+            <origin xyz="0 0 0.020" rpy="0 0 0"/>
+            <geometry><cylinder radius="0.040" length="0.220"/></geometry>
+          </collision>
+          <collision>
+            <origin xyz="0 0 0.130" rpy="0 0 0"/>
+            <geometry><sphere radius="0.040"/></geometry>
+          </collision>
+          <collision>
+            <origin xyz="0 0 -0.090" rpy="0 0 0"/>
+            <geometry><sphere radius="0.040"/></geometry>
+          </collision>
+        </link>
+        <joint name="${name}_7_link_sc_joint" type="fixed">
+          <parent link="${name}_7_link"/>
+          <child link="${name}_7_link_sc"/>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+        </joint>
+      </xacro:if>
     </xacro:unless>
 
 
