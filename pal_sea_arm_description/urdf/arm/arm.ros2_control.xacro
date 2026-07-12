@@ -15,7 +15,7 @@
   limitations under the License.
  -->
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="ros2_control_arm" params="name reduction offset_value use_sea_transmission:=false sim_type:=gazebo">
+  <xacro:macro name="ros2_control_arm" params="name reduction offset_value use_sea_transmission:=false sim_type:=gazebo initial_position:=0.0">
     <joint name="${name}_joint">
       <xacro:if value="${sim_type == 'mujoco-ros2-control'}">
         <param name="position_kp">700</param>
@@ -25,18 +25,14 @@
         <command_interface name="position_pid" />
       </xacro:if>
       <xacro:if value="${sim_type != 'mujoco-ros2-control'}">
-        <command_interface name="position" />
-      </xacro:if>
-      
-      <!-- TODO: Remove when moving to Gazebo Harmonic or ROS 2 Jazzy -->
-      <!-- Multiple command interfaces not working on Gazebo Fortress -->
-      <!-- https://github.com/ros-controls/gz_ros2_control/issues/182 -->
-      <xacro:if value="${gazebo_version == 'classic'}">
-        <command_interface name="velocity" />
+        <!-- gz_ros2_control (Ignition Fortress) only supports one command interface per joint;
+             expose effort only since PassthroughControllers claim effort interfaces -->
         <command_interface name="effort" />
       </xacro:if>
 
-      <state_interface name="position" />
+      <state_interface name="position">
+        <param name="initial_value">${initial_position}</param>
+      </state_interface>
       <state_interface name="velocity" />
       <state_interface name="effort" />
 

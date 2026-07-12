@@ -32,6 +32,14 @@
       </xacro:pal_pro_gripper>
     </xacro:if>
 
+    <!-- PAL ATC -->
+    <xacro:if value="${type == 'pal-atc'}">
+      <xacro:include filename="$(find pal_atc_description)/urdf/gripper.urdf.xacro" />
+      <xacro:pal_atc name="${name}" parent="${parent}" tool_changer="${tool_changer}">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      </xacro:pal_atc>
+    </xacro:if>
+
   <!--Allegro Hand-->
   <xacro:if value="${type == 'allegro-hand'}">
     <xacro:include filename="$(find allegro_hand_description)/urdf/allegro_hand.urdf.xacro" />
