@@ -9,23 +9,29 @@
       <xacro:include filename="$(find pal_sea_arm_description)/urdf/arm/arm_properties/${arm_type}/arm.properties.xacro"/>
       <xacro:include filename="$(find pal_sea_arm_description)/urdf/arm/arm_properties/${arm_type}/${wrist_model}.properties.xacro"/>
 
-      <xacro:if value="${mj_control == 'motor'}">
-        <motor name="${name}_1_joint_motor" joint="${name}_1_joint" ctrllimited="true" ctrlrange="-${arm_1_max_effort} ${arm_1_max_effort}" />
-        <motor name="${name}_2_joint_motor" joint="${name}_2_joint" ctrllimited="true" ctrlrange="-${arm_2_max_effort} ${arm_2_max_effort}" />
-        <motor name="${name}_3_joint_motor" joint="${name}_3_joint" ctrllimited="true" ctrlrange="-${arm_3_max_effort} ${arm_3_max_effort}" />
-        <motor name="${name}_4_joint_motor" joint="${name}_4_joint" ctrllimited="true" ctrlrange="-${arm_4_max_effort} ${arm_4_max_effort}" />
-        <motor name="${name}_5_joint_motor" joint="${name}_5_joint" ctrllimited="true" ctrlrange="-${arm_5_max_effort} ${arm_5_max_effort}" />
-        <motor name="${name}_6_joint_motor" joint="${name}_6_joint" ctrllimited="true" ctrlrange="-${arm_6_max_effort} ${arm_6_max_effort}" />
-        <motor name="${name}_7_joint_motor" joint="${name}_7_joint" ctrllimited="true" ctrlrange="-${arm_7_max_effort} ${arm_7_max_effort}" />
-      </xacro:if>
-      <xacro:if value="${mj_control == 'position'}">
-        <position name="${name}_1_joint_position" joint="${name}_1_joint" ctrlrange="${arm_1_joint_lb * deg_to_rad} ${arm_1_joint_ub * deg_to_rad}" kp="1000" kv="50" />
-        <position name="${name}_2_joint_position" joint="${name}_2_joint" ctrlrange="${arm_2_joint_lb * deg_to_rad} ${arm_2_joint_ub * deg_to_rad}" kp="1000" kv="60" />
-        <position name="${name}_3_joint_position" joint="${name}_3_joint" ctrlrange="${arm_3_joint_lb * deg_to_rad} ${arm_3_joint_ub * deg_to_rad}" kp="1000" kv="50" />
-        <position name="${name}_4_joint_position" joint="${name}_4_joint" ctrlrange="${arm_4_joint_lb * deg_to_rad} ${arm_4_joint_ub * deg_to_rad}" kp="500"  kv="20"/>
-        <position name="${name}_5_joint_position" joint="${name}_5_joint" ctrlrange="${arm_5_joint_lb * deg_to_rad} ${arm_5_joint_ub * deg_to_rad}" kp="1000" kv="20" />
-        <position name="${name}_6_joint_position" joint="${name}_6_joint" ctrlrange="${arm_6_joint_lb * deg_to_rad} ${arm_6_joint_ub * deg_to_rad}" kp="1000" kv="20" />
-        <position name="${name}_7_joint_position" joint="${name}_7_joint" ctrlrange="${arm_7_joint_lb * deg_to_rad} ${arm_7_joint_ub * deg_to_rad}" kp="500"  kv="20"/>
-      </xacro:if>
+        <xacro:if value="${mj_control == 'motor'}">
+          <motor name="${name}_1_joint_motor" joint="${name}_1_joint" ctrllimited="true" ctrlrange="-${arm_1_max_effort} ${arm_1_max_effort}" />
+          <motor name="${name}_2_joint_motor" joint="${name}_2_joint" ctrllimited="true" ctrlrange="-${arm_2_max_effort} ${arm_2_max_effort}" />
+          <motor name="${name}_3_joint_motor" joint="${name}_3_joint" ctrllimited="true" ctrlrange="-${arm_3_max_effort} ${arm_3_max_effort}" />
+          <motor name="${name}_4_joint_motor" joint="${name}_4_joint" ctrllimited="true" ctrlrange="-${arm_4_max_effort} ${arm_4_max_effort}" />
+          <motor name="${name}_5_joint_motor" joint="${name}_5_joint" ctrllimited="true" ctrlrange="-${arm_5_max_effort} ${arm_5_max_effort}" />
+          <motor name="${name}_6_joint_motor" joint="${name}_6_joint" ctrllimited="true" ctrlrange="-${arm_6_max_effort} ${arm_6_max_effort}" />
+        </xacro:if>
+        <xacro:if value="${mj_control == 'position'}">
+          <xacro:if value="${arm_type in ['pal-sea-arm-standalone']}">
+            <position name="${name}_1_joint_position" joint="${name}_1_joint" ctrllimited="false" kp="1000" kv="50" />
+            <position name="${name}_3_joint_position" joint="${name}_3_joint" ctrllimited="false" kp="1000" kv="50" />
+            <position name="${name}_5_joint_position" joint="${name}_5_joint" ctrllimited="false" kp="1000" kv="20" />
+          </xacro:if>
+          <xacro:unless value="${arm_type in ['pal-sea-arm-standalone']}">
+            <position name="${name}_1_joint_position" joint="${name}_1_joint" ctrlrange="${arm_1_joint_lb * deg_to_rad} ${arm_1_joint_ub * deg_to_rad}" kp="1000" kv="50" />
+            <position name="${name}_3_joint_position" joint="${name}_3_joint" ctrlrange="${arm_3_joint_lb * deg_to_rad} ${arm_3_joint_ub * deg_to_rad}" kp="1000" kv="50" />
+            <position name="${name}_5_joint_position" joint="${name}_5_joint" ctrlrange="${arm_5_joint_lb * deg_to_rad} ${arm_5_joint_ub * deg_to_rad}" kp="1000" kv="20" />
+          </xacro:unless>
+          <position name="${name}_2_joint_position" joint="${name}_2_joint" ctrlrange="${arm_2_joint_lb * deg_to_rad} ${arm_2_joint_ub * deg_to_rad}" kp="1000" kv="60" />
+          <position name="${name}_4_joint_position" joint="${name}_4_joint" ctrlrange="${arm_4_joint_lb * deg_to_rad} ${arm_4_joint_ub * deg_to_rad}" kp="500"  kv="20"/>
+          <position name="${name}_6_joint_position" joint="${name}_6_joint" ctrlrange="${arm_6_joint_lb * deg_to_rad} ${arm_6_joint_ub * deg_to_rad}" kp="1000" kv="20" />
+          <position name="${name}_7_joint_position" joint="${name}_7_joint" ctrlrange="${arm_7_joint_lb * deg_to_rad} ${arm_7_joint_ub * deg_to_rad}" kp="500"  kv="20"/>
+        </xacro:if>
     </xacro:macro>
 </robot>

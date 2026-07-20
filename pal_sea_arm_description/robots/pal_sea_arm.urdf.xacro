@@ -89,7 +89,7 @@
   <xacro:if value="${sim_type in ['mujoco-ros2-control', 'mujoco'] and end_effector not in ['no-end-effector', 'pal-pro-gripper']}">
     <xacro:incompatible_end_effector_for_mujoco />
   </xacro:if>
-  <xacro:if value="${sim_type in ['mujoco-ros2-control', 'mujoco'] and arm_type not in ['tiago-pro', 'tiago-pro-s']}">
+  <xacro:if value="${sim_type in ['mujoco-ros2-control', 'mujoco'] and arm_type not in ['pal-sea-arm-standalone', 'tiago-pro', 'tiago-pro-s']}">
     <xacro:incompatible_arm_type_for_mujoco />
   </xacro:if>
 
