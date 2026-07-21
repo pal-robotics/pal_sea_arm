@@ -499,6 +499,9 @@
           <modify_element type="joint" name="arm_5_joint" damping="10"/>
           <modify_element type="joint" name="arm_6_joint" damping="10"/>
           <modify_element type="joint" name="arm_7_joint" damping="10"/>
+
+          <modify_element type="geom" mesh="fingertip" class="collision"
+                  friction="1.0 0.1 0.005" condim="6" solref="0.001 1" solimp="0.95 0.99 0.001"/>
         </xacro:if>
       </processed_inputs>
     </mujoco_inputs>
