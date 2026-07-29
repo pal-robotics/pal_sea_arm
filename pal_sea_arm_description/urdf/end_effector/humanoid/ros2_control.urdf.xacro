@@ -20,16 +20,30 @@
   <!-- MACRO DEFINITION-->
   <xacro:macro name="end_effector_ros2_control" params="side end_effector_type">
     
-    <xacro:if value="${end_effector_${side} == 'gripper'}">
+    <xacro:if value="${end_effector_type == 'gripper'}">
       <xacro:include filename="$(find pal_pro_gripper_description)/urdf/gripper.ros2_control.xacro" />
       <xacro:ros2_control_pal_pro_gripper name="gripper_${side}" reduction="1.0"  sim_type="${sim_type}"/>
     </xacro:if>
 
-    <xacro:if value="${end_effector_${side} == 'RH8D'}">
+    <!-- RH8D on real hardware is driven by rh8d_topic_driver, which needs its own
+         <ros2_control> element with the topic-based plugin. That cannot be nested here, so it
+         is emitted alongside the main system block by end_effector_standalone_ros2_control. -->
+    <xacro:if value="${end_effector_type == 'RH8D' and sim_type != 'no-simulation'}">
       <xacro:include filename="$(find rh8d_description)/urdf/hand/ros2_control.urdf.xacro" />
-      <xacro:hand_ros2_control side="${side}" mimic="${use_mimic}"/>
+      <xacro:hand_ros2_control side="${side}"/>
     </xacro:if>
-   
+
+  </xacro:macro>
+
+  <!-- End effectors that bring their own <ros2_control> element. Must be instantiated OUTSIDE
+       the robot's main system block. -->
+  <xacro:macro name="end_effector_standalone_ros2_control" params="side end_effector_type">
+
+    <xacro:if value="${end_effector_type == 'RH8D' and sim_type == 'no-simulation'}">
+      <xacro:include filename="$(find rh8d_description)/ros2_control/topic_based_ros2_control.urdf.xacro" />
+      <xacro:rh8d_topic_based_ros2_control side="${side}"/>
+    </xacro:if>
+
   </xacro:macro>
 
 </robot>

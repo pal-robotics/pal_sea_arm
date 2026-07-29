@@ -22,7 +22,7 @@
     - parent: Parent link
     - reflect: Set to 1 for a right end effector, or to -1 for a left end effector
   -->
-  <xacro:macro name="hand" params="name parent side mimic:=False *origin">
+  <xacro:macro name="hand" params="name parent side *origin">
     <!-- PROPERTIES -->
     <xacro:property name="reflect" value="${'1' if side == 'left' else '-1'}" />
 
@@ -30,7 +30,7 @@
     <xacro:include filename="$(find rh8d_description)/urdf/hand/hand.urdf.xacro"/>
 
     <!-- ROBOT DEFINITION -->
-    <xacro:rh8d_hand name="${name}" side="${side}" reflect="${reflect}" parent="${parent}" mimic="${mimic}" >
+    <xacro:rh8d_hand name="${name}" side="${side}" reflect="${reflect}" parent="${parent}" >
       <xacro:insert_block name="origin"/>
     </xacro:rh8d_hand>
 
