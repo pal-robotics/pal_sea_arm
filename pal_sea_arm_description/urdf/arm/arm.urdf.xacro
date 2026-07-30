@@ -463,6 +463,14 @@
             <geom group="3" type="mesh" density="0"/>
           </default>
         </default>
+
+        <!-- FT-Sensor -->
+         <xacro:if value="${has_ft_sensor}">
+          <sensor>
+            <force name="wrist_ft_sensor_force" site="arm_tool_link"/>
+            <torque name="wrist_ft_sensor_torque" site="arm_tool_link"/>
+          </sensor>
+        </xacro:if>
       </raw_inputs>
 
       <processed_inputs>
