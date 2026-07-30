@@ -15,6 +15,9 @@ Changelog for package pal_sea_arm_controller_configuration
 * Restructure launch files
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
+Forthcoming
+-----------
+
 2.8.2 (2026-07-20)
 ------------------
 * Add prefix argument and change value for no side

@@ -23,6 +23,13 @@ Changelog for package pal_sea_arm_description
 * Add arm model check in urdf
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
+Forthcoming
+-----------
+* Proper launch of the RH8D hand
+  Removes the mimic flag and properly loads the topic based system (used
+  for the HW hand)
+* Contributors: Óscar Martínez
+
 2.8.2 (2026-07-20)
 ------------------
 * add pen-gripper as ee
