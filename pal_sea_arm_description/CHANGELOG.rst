@@ -23,6 +23,11 @@ Changelog for package pal_sea_arm_description
 * Add arm model check in urdf
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
+Forthcoming
+-----------
+* Adding missing rh8d description dep
+* Contributors: oscarmartinez
+
 2.8.3 (2026-07-30)
 ------------------
 * Proper launch of the RH8D hand
