@@ -17,9 +17,9 @@
         </inertial>
     </xacro:macro>
 
-    <xacro:macro name="origin_joint_5" params="reflect">
+    <xacro:macro name="origin_joint_5" params="reflect name">
         <!-- Check new limits -->
-        <origin xyz="-0.0199999999999971 0.17011 -0.037110000000002" rpy="-1.5707963267949 3.14 0" />
+        <origin xyz="${-0.0199999999999971 + (arm_right_5_dx if name=='arm_right' else arm_left_5_dx)} ${0.17011 + (arm_right_5_dy if name=='arm_right' else arm_left_5_dy)} ${-0.037110000000002 + (arm_right_5_dz if name=='arm_right' else arm_left_5_dz)}" rpy="${-1.5707963267949 + (arm_right_5_droll if name=='arm_right' else arm_left_5_droll)} ${3.14 + (arm_right_5_dpitch if name=='arm_right' else arm_left_5_dpitch)} ${0 + (arm_right_5_dyaw if name=='arm_right' else arm_left_5_dyaw)}" />
     </xacro:macro>
 
     <xacro:macro name="inertial_link_6" params="reflect">
@@ -39,8 +39,8 @@
         </inertial>
     </xacro:macro>
 
-    <xacro:macro name="origin_joint_6" params="reflect">
-        <origin xyz="0 -0.0422 0.1654" rpy="-1.5708 0 3.14" />
+    <xacro:macro name="origin_joint_6" params="reflect name">
+        <origin xyz="${0 + (arm_right_6_dx if name=='arm_right' else arm_left_6_dx)} ${-0.0422 + (arm_right_6_dy if name=='arm_right' else arm_left_6_dy)} ${0.1654 + (arm_right_6_dz if name=='arm_right' else arm_left_6_dz)}" rpy="${-1.5708 + (arm_right_6_droll if name=='arm_right' else arm_left_6_droll)} ${0 + (arm_right_6_dpitch if name=='arm_right' else arm_left_6_dpitch)} ${3.14 + (arm_right_6_dyaw if name=='arm_right' else arm_left_6_dyaw)}" />
     </xacro:macro>
 
     <xacro:macro name="inertial_link_7" params="reflect">
@@ -60,8 +60,8 @@
         </inertial>
     </xacro:macro>
 
-    <xacro:macro name="origin_joint_7" params="reflect">
-        <origin xyz="0.07 -0.0534 -0.0422" rpy="1.5708 0 0" />
+    <xacro:macro name="origin_joint_7" params="reflect name">
+        <origin xyz="${0.07 + (arm_right_7_dx if name=='arm_right' else arm_left_7_dx)} ${-0.0534 + (arm_right_7_dy if name=='arm_right' else arm_left_7_dy)} ${-0.0422 + (arm_right_7_dz if name=='arm_right' else arm_left_7_dz)}" rpy="${1.5708 + (arm_right_7_droll if name=='arm_right' else arm_left_7_droll)} ${0 + (arm_right_7_dpitch if name=='arm_right' else arm_left_7_dpitch)} ${0 + (arm_right_7_dyaw if name=='arm_right' else arm_left_7_dyaw)}" />
     </xacro:macro>
 
     <xacro:macro name="origin_joint_tool_changer" params="reflect">

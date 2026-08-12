@@ -121,7 +121,7 @@
 
     <!-- ARM 2 JOINT -->
     <joint name="${name}_2_joint" type="revolute">
-      <xacro:origin_joint_2 reflect="${reflect}"/>
+      <xacro:origin_joint_2 reflect="${reflect}" name="${name}"/>
       <parent link="${name}_1_link" />
       <child link="${name}_2_link" />
       <axis xyz="0 0 1" />
@@ -151,7 +151,7 @@
     <!-- ARM 3 JOINT -->
     <joint name="${name}_3_joint" type="${joint_type}">
 
-      <xacro:origin_joint_3 reflect="${reflect}"/>
+      <xacro:origin_joint_3 reflect="${reflect}" name="${name}"/>
       <parent link="${name}_2_link" />
       <child link="${name}_3_link" />
       <axis xyz="0 0 1" />
@@ -194,7 +194,7 @@
 
     <!-- ARM 4 JOINT -->
     <joint name="${name}_4_joint" type="revolute">
-      <xacro:origin_joint_4 reflect="${reflect}"/>
+      <xacro:origin_joint_4 reflect="${reflect}" name="${name}"/>
       <parent link="${name}_3_link" />
       <child link="${name}_4_link" />
       <axis xyz="0 0 1" />
@@ -224,7 +224,7 @@
     <!-- ARM 5 JOINT -->
     <joint name="${name}_5_joint" type="${joint_type}">
 
-      <xacro:origin_joint_5 reflect="${reflect}"/>
+      <xacro:origin_joint_5 reflect="${reflect}" name="${name}"/>
       <parent link="${name}_4_link" />
       <child link="${name}_5_link" />
       <axis xyz="0 0 1" />
@@ -268,7 +268,7 @@
 
       <!-- ARM 6 JOINT -->
       <joint name="${name}_6_joint" type="revolute">
-        <xacro:origin_joint_6 reflect="${reflect}"/>
+        <xacro:origin_joint_6 reflect="${reflect}" name="${name}"/>
         <parent link="${name}_5_link" />
         <child link="${name}_6_link" />
         <axis xyz="0 0 ${-1 if wrist_model=='spherical-wrist' else 1}" />
@@ -297,7 +297,7 @@
 
       <!-- ARM 7 JOINT -->
       <joint name="${name}_7_joint" type="revolute">
-        <xacro:origin_joint_7 reflect="${reflect}"/>
+        <xacro:origin_joint_7 reflect="${reflect}" name="${name}"/>
         <parent link="${name}_6_link" />
         <child link="${name}_7_link" />
         <axis xyz="0 0 1" />

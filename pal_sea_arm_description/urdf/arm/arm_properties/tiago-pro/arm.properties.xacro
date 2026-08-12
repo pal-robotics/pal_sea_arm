@@ -56,8 +56,8 @@
         </xacro:if>
     </xacro:macro>
 
-    <xacro:macro name="origin_joint_2" params="reflect">
-        <origin xyz="0.0371099999999995 0.02 0.18" rpy="-1.57079632679489 0 -1.5707963267949" />
+    <xacro:macro name="origin_joint_2" params="reflect name">
+        <origin xyz="${0.0371099999999995 + (arm_right_2_dx if name=='arm_right' else arm_left_2_dx)} ${0.02 + (arm_right_2_dy if name=='arm_right' else arm_left_2_dy)} ${0.18 + (arm_right_2_dz if name=='arm_right' else arm_left_2_dz)}" rpy="${-1.57079632679489 + (arm_right_2_droll if name=='arm_right' else arm_left_2_droll)} ${0 + (arm_right_2_dpitch if name=='arm_right' else arm_left_2_dpitch)} ${-1.5707963267949 + (arm_right_2_dyaw if name=='arm_right' else arm_left_2_dyaw)}" />
     </xacro:macro>
 
     <xacro:macro name="inertial_link_3" params="reflect">
@@ -86,8 +86,8 @@
         </xacro:if>
     </xacro:macro>
 
-    <xacro:macro name="origin_joint_3" params="reflect">
-        <origin xyz="0.019999999999999 -0.17011 -0.037110000000001" rpy="1.5707963267949 0 0" />
+    <xacro:macro name="origin_joint_3" params="reflect name">
+        <origin xyz="${0.019999999999999 + (arm_right_3_dx if name=='arm_right' else arm_left_3_dx)} ${-0.17011 + (arm_right_3_dy if name=='arm_right' else arm_left_3_dy)} ${-0.037110000000001 + (arm_right_3_dz if name=='arm_right' else arm_left_3_dz)}" rpy="${1.5707963267949 + (arm_right_3_droll if name=='arm_right' else arm_left_3_droll)} ${0 + (arm_right_3_dpitch if name=='arm_right' else arm_left_3_dpitch)} ${0 + (arm_right_3_dyaw if name=='arm_right' else arm_left_3_dyaw)}" />
     </xacro:macro>
 
     <xacro:macro name="inertial_link_4" params="reflect">
@@ -116,7 +116,7 @@
         </xacro:if>
     </xacro:macro>
 
-    <xacro:macro name="origin_joint_4" params="reflect">
-        <origin xyz="0.0199999999999993 -0.0371100000000008 0.15989" rpy="1.57079632679489 0 0" />
+    <xacro:macro name="origin_joint_4" params="reflect name">
+        <origin xyz="${0.0199999999999993 + (arm_right_4_dx if name=='arm_right' else arm_left_4_dx)} ${-0.0371100000000008 + (arm_right_4_dy if name=='arm_right' else arm_left_4_dy)} ${0.15989 + (arm_right_4_dz if name=='arm_right' else arm_left_4_dz)}" rpy="${1.57079632679489 + (arm_right_4_droll if name=='arm_right' else arm_left_4_droll)} ${0 + (arm_right_4_dpitch if name=='arm_right' else arm_left_4_dpitch)} ${0 + (arm_right_4_dyaw if name=='arm_right' else arm_left_4_dyaw)}" />
     </xacro:macro>
 </robot>
