@@ -16,6 +16,7 @@
           <motor name="${name}_4_joint_motor" joint="${name}_4_joint" ctrllimited="true" ctrlrange="-${arm_4_max_effort} ${arm_4_max_effort}" />
           <motor name="${name}_5_joint_motor" joint="${name}_5_joint" ctrllimited="true" ctrlrange="-${arm_5_max_effort} ${arm_5_max_effort}" />
           <motor name="${name}_6_joint_motor" joint="${name}_6_joint" ctrllimited="true" ctrlrange="-${arm_6_max_effort} ${arm_6_max_effort}" />
+          <motor name="${name}_7_joint_motor" joint="${name}_7_joint" ctrllimited="true" ctrlrange="-${arm_7_max_effort} ${arm_7_max_effort}" />
         </xacro:if>
         <xacro:if value="${mj_control == 'position'}">
           <xacro:if value="${arm_type in ['pal-sea-arm-standalone']}">
