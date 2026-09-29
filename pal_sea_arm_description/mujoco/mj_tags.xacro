@@ -39,4 +39,11 @@
           </xacro:unless>
         </xacro:if>
     </xacro:macro>
+
+    <!-- Contact -->
+    <xacro:macro name="mj_arm_contact" params="name wrist_model">
+      <xacro:unless value="${wrist_model == 'short-wrist'}">
+        <exclude body1="${name}_5_link" body2="${name}_7_link"/>
+      </xacro:unless>
+    </xacro:macro>
 </robot>

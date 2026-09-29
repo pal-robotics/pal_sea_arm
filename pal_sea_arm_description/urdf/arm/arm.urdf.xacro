@@ -448,12 +448,15 @@
           <equality>
             <xacro:mj_gripper_equality name="gripper" anchor_r="0.014 -0.0015 0" anchor_l="0.014 -0.001 0"/>
           </equality>
-
-          <!-- Contact-->
-          <contact>
-            <xacro:mj_gripper_contact name="gripper"/>
-          </contact>
         </xacro:if>
+
+        <!-- Contact-->
+        <contact>
+          <xacro:mj_arm_contact name="arm" wrist_model="${wrist_model}"/>
+          <xacro:if value="${has_end_effector}">
+            <xacro:mj_gripper_contact name="gripper"/>
+          </xacro:if>
+        </contact>
 
         <default>
           <default class="visual">
