@@ -68,17 +68,20 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
     return
 
 
-def resolve_mujoco_scene(context, fallback='floor'):
-    # world_name is shared with Gazebo: use the fallback if it is not a MuJoCo scene
+def resolve_mujoco_scene(context, gazebo_default='pal_office', fallback='floor'):
+    # world_name is shared with Gazebo: only its default world falls back to a MuJoCo scene
     world_name = read_launch_argument('world_name', context)
     if 'mujoco' not in read_launch_argument('sim_type', context):
         return world_name
     scenes_dir = Path(get_package_share_directory('pal_mujoco_scenes')) / 'scenes'
     if (scenes_dir / f'{world_name}.xacro').is_file():
         return world_name
-    logging.get_logger('robot_state_publisher.launch').warning(
-        f"No MuJoCo scene '{world_name}' in {scenes_dir}, using '{fallback}'")
-    return fallback
+    if world_name == gazebo_default:
+        logging.get_logger('robot_state_publisher.launch').warning(
+            f"No MuJoCo scene '{world_name}' in {scenes_dir}, using '{fallback}'")
+        return fallback
+    available = ', '.join(sorted(p.stem for p in scenes_dir.glob('*.xacro')))
+    raise RuntimeError(f"No MuJoCo scene '{world_name}' in {scenes_dir}. Available: {available}")
 
 
 def create_robot_description_param(context, *args, **kwargs):
