@@ -20,7 +20,7 @@
           usage: demo
           description: First motion arm
 
-      calibration_position:
+      calibration_position_arm_1_3_5_7:
         joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
         times_from_start: [0.0]
         positions: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
@@ -29,7 +29,7 @@
           usage: calibration
           description: Motion for calibration
 
-      calibration_position_2:
+      calibration_position_arm_2:
         joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
         times_from_start: [5.0]
         positions: [-0.82, 0.0, -1.550, -2.368, -0.211, 1.264, 0.0]
@@ -38,7 +38,7 @@
           usage: calibration
           description: Pre-calibration position for arm_2_joint
 
-      calibration_position_4:
+      calibration_position_arm_4:
         joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
         times_from_start: [5.0]
         positions: [-0.632, -1.57, 1.57, 0.0, 0.0, 0.0, 0.0]
@@ -47,7 +47,7 @@
           usage: calibration
           description: Pre-calibration position for arm_4_joint
 
-      calibration_position_6:
+      calibration_position_arm_6:
         joints: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint, arm_7_joint]
         times_from_start: [5.0]
         positions: [-0.602, -1.57, 1.57, 0.0, 0.0, 0.0, 0.0]
