@@ -140,7 +140,7 @@
   <link name="world"></link>
 
   <joint name="base_joint" type="fixed">
-    <origin xyz="0 0 -0.08" rpy="0 0 0"/>
+    <origin xyz="0 0 ${0.0 if sim_type in ['mujoco-ros2-control', 'mujoco'] else -0.08}" rpy="0 0 0"/>
     <parent link="world"/>
     <child link="base_link"/>
   </joint>
