@@ -19,7 +19,7 @@ from pathlib import Path
 
 from ament_index_python.packages import get_package_share_directory
 
-from launch import LaunchDescription, logging
+from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction, SetLaunchConfiguration
 from launch.substitutions import LaunchConfiguration
 from launch_pal.arg_utils import LaunchArgumentsBase
@@ -68,22 +68,6 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
     return
 
 
-def resolve_mujoco_scene(context, gazebo_default='pal_office', fallback='floor'):
-    # world_name is shared with Gazebo: only its default world falls back to a MuJoCo scene
-    world_name = read_launch_argument('world_name', context)
-    if 'mujoco' not in read_launch_argument('sim_type', context):
-        return world_name
-    scenes_dir = Path(get_package_share_directory('pal_mujoco_scenes')) / 'scenes'
-    if (scenes_dir / f'{world_name}.xacro').is_file():
-        return world_name
-    if world_name == gazebo_default:
-        logging.get_logger('robot_state_publisher.launch').warning(
-            f"No MuJoCo scene '{world_name}' in {scenes_dir}, using '{fallback}'")
-        return fallback
-    available = ', '.join(sorted(p.stem for p in scenes_dir.glob('*.xacro')))
-    raise RuntimeError(f"No MuJoCo scene '{world_name}' in {scenes_dir}. Available: {available}")
-
-
 def create_robot_description_param(context, *args, **kwargs):
 
     xacro_file_path = Path(os.path.join(
@@ -101,7 +85,7 @@ def create_robot_description_param(context, *args, **kwargs):
         'namespace': read_launch_argument('namespace', context),
         'sim_type': read_launch_argument('sim_type', context),
         'mj_control': read_launch_argument('mj_control', context),
-        'world_name': resolve_mujoco_scene(context),
+        'world_name': read_launch_argument('world_name', context),
         'gazebo_version': read_launch_argument('gazebo_version', context),
         'limits_v2': read_launch_argument('limits_v2', context),
     }
