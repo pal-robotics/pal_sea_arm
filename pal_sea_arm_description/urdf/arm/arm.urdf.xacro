@@ -452,6 +452,7 @@
 
         <!-- Contact-->
         <contact>
+          <exclude body1="arm_root_link" body2="arm_1_link"/>
           <xacro:mj_arm_contact name="arm" wrist_model="${wrist_model}"/>
           <xacro:if value="${has_end_effector}">
             <xacro:mj_gripper_contact name="gripper"/>
