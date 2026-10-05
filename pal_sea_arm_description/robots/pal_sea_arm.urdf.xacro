@@ -48,6 +48,9 @@
   <!-- false, position, motor -->
   <xacro:arg name="mj_control" default="false" />
 
+  <!-- MuJoCo gravity compensation of the arm (true, false). -->
+  <xacro:arg name="mj_gravcomp" default="true" />
+
   <!-- floor -->
   <xacro:arg name="world_name" default="floor" />
 
@@ -67,6 +70,7 @@
 
   <xacro:property name="sim_type" value="$(arg sim_type)" />
   <xacro:property name="mj_control" value="$(arg mj_control)"/>
+  <xacro:property name="mj_gravcomp" value="$(arg mj_gravcomp)"/>
   <xacro:property name="world_name" value="$(arg world_name)"/>
 
   <xacro:if value="${end_effector not in ['no-end-effector', 'pal-pro-gripper', 'allegro-hand', 'custom', 'pen-gripper']}">
