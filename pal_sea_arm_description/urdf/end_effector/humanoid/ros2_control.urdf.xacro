@@ -20,7 +20,7 @@
   <!-- MACRO DEFINITION-->
   <xacro:macro name="end_effector_ros2_control" params="side end_effector_type">
     
-    <xacro:if value="${end_effector_type == 'gripper'}">
+    <xacro:if value="${end_effector_type == 'pal-pro-gripper'}">
       <xacro:include filename="$(find pal_pro_gripper_description)/urdf/gripper.ros2_control.xacro" />
       <xacro:ros2_control_pal_pro_gripper name="gripper_${side}" reduction="1.0"  sim_type="${sim_type}"/>
     </xacro:if>
