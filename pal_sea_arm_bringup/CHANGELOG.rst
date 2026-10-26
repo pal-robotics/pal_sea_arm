@@ -11,8 +11,8 @@ Changelog for package pal_sea_arm_bringup
 * Restructure launch files pal-sea-arm-bringup
 * Contributors: David ter Kuile, davidterkuile
 
-Forthcoming
------------
+2.9.0 (2026-10-26)
+------------------
 * change name motions
 * add motions for sea calibration
 * rm unused motion
