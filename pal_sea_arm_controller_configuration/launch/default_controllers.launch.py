@@ -16,7 +16,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import GroupAction, OpaqueFunction
-from launch.conditions import LaunchConfigurationNotEquals, IfCondition
+from launch.conditions import LaunchConfigurationNotEquals, IfCondition, UnlessCondition
 from launch.actions import DeclareLaunchArgument
 from controller_manager.launch_utils import generate_load_controller_launch_description
 from launch.substitutions import LaunchConfiguration
@@ -34,6 +34,7 @@ class LaunchArguments(LaunchArgumentsBase):
     ft_sensor: DeclareLaunchArgument = SEAArmArgs.ft_sensor
     torque_estimation: DeclareLaunchArgument = SEAArmArgs.torque_estimation
     use_sim_time: DeclareLaunchArgument = CommonArgs.use_sim_time
+    is_public_sim: DeclareLaunchArgument = CommonArgs.is_public_sim
     namespace: DeclareLaunchArgument = CommonArgs.namespace
     wrist_model: DeclareLaunchArgument = SEAArmArgs.wrist_model
 
@@ -86,7 +87,9 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
         launch_arguments={"side": '',
                           "root_link": 'arm_root_link',
                           "wrist_model": LaunchConfiguration('wrist_model')
-                          })
+                          },
+        condition=UnlessCondition(LaunchConfiguration("is_public_sim"))
+    )
 
     launch_description.add_action(gravity_compensation_controller_effort)
 
@@ -95,6 +98,7 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
         paths=['launch', 'input_state_broadcaster.launch.py'],
         launch_arguments={"side": '',
                           "prefix": ''},
+        condition=UnlessCondition(LaunchConfiguration("is_public_sim"))
     )
 
     launch_description.add_action(input_state_broadcaster)
