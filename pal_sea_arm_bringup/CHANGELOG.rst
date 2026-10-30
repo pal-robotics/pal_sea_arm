@@ -11,6 +11,11 @@ Changelog for package pal_sea_arm_bringup
 * Restructure launch files pal-sea-arm-bringup
 * Contributors: David ter Kuile, davidterkuile
 
+Forthcoming
+-----------
+* add 'is_public_sim' bool to NOT start gravity compensation controller and 'input_state_broadcaster'
+* Contributors: francescodorazio
+
 2.9.0 (2026-10-26)
 ------------------
 * change name motions

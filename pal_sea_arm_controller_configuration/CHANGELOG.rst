@@ -15,6 +15,11 @@ Changelog for package pal_sea_arm_controller_configuration
 * Restructure launch files
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
+Forthcoming
+-----------
+* add 'is_public_sim' bool to NOT start gravity compensation controller and 'input_state_broadcaster'
+* Contributors: francescodorazio
+
 2.9.0 (2026-10-26)
 ------------------
 

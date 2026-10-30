@@ -23,6 +23,9 @@ Changelog for package pal_sea_arm_description
 * Add arm model check in urdf
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
+Forthcoming
+-----------
+
 2.9.0 (2026-10-26)
 ------------------
 * Rename gripper comments to pal-pro-gripper
