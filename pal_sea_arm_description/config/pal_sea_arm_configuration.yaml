@@ -13,7 +13,7 @@ ft_sensor:
 wrist_model:
   description: "Wrist model"
   choices: ['straight-wrist', 'spherical-wrist', 'short-wrist']
-  default_value: 'straight-wrist'
+  default_value: 'spherical-wrist'
 tool_changer:
   description: 'The arm has a tool changer'
   choices: ['False', 'True']
