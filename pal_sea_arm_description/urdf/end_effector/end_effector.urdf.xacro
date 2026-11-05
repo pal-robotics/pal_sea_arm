@@ -36,7 +36,7 @@
     <xacro:if value="${type == 'pen-gripper'}">
       <joint name="pen_gripper_joint" type="fixed">
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <parent link="arm_tool_link"/>
+        <parent link="${parent}"/>
         <child link="pen_gripper_base_link"/>
       </joint>
 
