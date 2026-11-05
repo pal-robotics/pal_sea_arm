@@ -15,8 +15,8 @@ Changelog for package pal_sea_arm_controller_configuration
 * Restructure launch files
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
-Forthcoming
------------
+2.9.2 (2026-11-05)
+------------------
 * add dependency for FT sensor broadcaster
 * Contributors: francescodorazio
 
