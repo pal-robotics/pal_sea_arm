@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 # Copyright (c) 2024 PAL Robotics S.L. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,16 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
+
 from ament_index_python.packages import get_package_share_directory
 from controller_manager.launch_utils import generate_load_controller_launch_description
+from launch import LaunchContext, LaunchDescription
+from launch.actions import DeclareLaunchArgument, SetLaunchConfiguration
 from launch.actions import GroupAction, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
-from launch import LaunchDescription, LaunchContext
 
 from launch_pal.arg_utils import LaunchArgumentsBase, read_launch_argument
 from launch_pal.param_utils import parse_parametric_yaml
-from launch.actions import DeclareLaunchArgument, SetLaunchConfiguration
-from dataclasses import dataclass
 from launch_pal.robot_arguments import CommonArgs
 from pal_sea_arm_description.launch_arguments import SEAArmArgs
 
@@ -51,9 +52,9 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
         function=setup_controller_configuration))
 
     gravity_compensation_controller = GroupAction([generate_load_controller_launch_description(
-        controller_name=LaunchConfiguration("controller_name"),
-        controller_params_file=LaunchConfiguration("controller_config"),
-        extra_spawner_args=["--inactive"])])
+        controller_name=LaunchConfiguration('controller_name'),
+        controller_params_file=LaunchConfiguration('controller_config'),
+        extra_spawner_args=['--inactive'])])
 
     launch_description.add_action(gravity_compensation_controller)
 
@@ -67,26 +68,26 @@ def setup_controller_configuration(context: LaunchContext):
     wrist_model = read_launch_argument('wrist_model', context)
     root_link = read_launch_argument('root_link', context)
 
-    if mode == "torque" and wrist_model == 'short-wrist':
+    if mode == 'torque' and wrist_model == 'short-wrist':
         raise RuntimeError(
-            "Torque mode is not compatible with short-wrist model.")
+            'Torque mode is not compatible with short-wrist model.')
 
     if not root_link:
-        root_link = "torso_lift_link"
+        root_link = 'torso_lift_link'
 
-    arm_prefix = "arm"
+    arm_prefix = 'arm'
     if side:
-        arm_prefix = f"arm_{side}"
+        arm_prefix = f'arm_{side}'
 
     if side == '':
-        arm_prefix = "arm"
+        arm_prefix = 'arm'
 
-    controller_name = f"{arm_prefix}_gravity_compensation_controller"
-    if mode == "torque":
-        controller_name += "_" + mode
+    controller_name = f'{arm_prefix}_gravity_compensation_controller'
+    if mode == 'torque':
+        controller_name += '_' + mode
 
-    remappings = {"ARM_SIDE_PREFIX": arm_prefix,
-                  "ROOT_LINK": root_link}
+    remappings = {'ARM_SIDE_PREFIX': arm_prefix,
+                  'ROOT_LINK': root_link}
 
     param_file_name = f'arm_gravity_compensation_controller_{mode}'
 

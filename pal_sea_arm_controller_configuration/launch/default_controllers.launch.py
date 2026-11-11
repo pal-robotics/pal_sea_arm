@@ -12,20 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 import os
+
 from ament_index_python.packages import get_package_share_directory
-from launch import LaunchDescription
-from launch.actions import GroupAction, OpaqueFunction
-from launch.conditions import LaunchConfigurationNotEquals, IfCondition, UnlessCondition
-from launch.actions import DeclareLaunchArgument
 from controller_manager.launch_utils import generate_load_controller_launch_description
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.actions import GroupAction, OpaqueFunction
+from launch.conditions import IfCondition, LaunchConfigurationNotEquals, UnlessCondition
 from launch.substitutions import LaunchConfiguration
-from launch_pal.include_utils import include_scoped_launch_py_description
 from launch_pal.arg_utils import LaunchArgumentsBase, read_launch_argument
+from launch_pal.include_utils import include_scoped_launch_py_description
 from launch_pal.robot_arguments import CommonArgs
 from pal_sea_arm_description.launch_arguments import SEAArmArgs
-
-from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
@@ -62,7 +62,7 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
                 'config', 'joint_torque_state_broadcaster.yaml'))
          ],
         forwarding=False,
-        condition=IfCondition(LaunchConfiguration("torque_estimation"))
+        condition=IfCondition(LaunchConfiguration('torque_estimation'))
     )
     launch_description.add_action(joint_torque_state_broadcaster)
 
@@ -70,7 +70,7 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
         pkg_name='pal_sea_arm_controller_configuration',
         paths=['launch', 'sea_state_broadcaster_controller.launch.py'],
         launch_arguments={'side': ''},
-        condition=IfCondition(LaunchConfiguration("torque_estimation"))
+        condition=IfCondition(LaunchConfiguration('torque_estimation'))
     )
 
     launch_description.add_action(sea_state_broadcaster)
@@ -84,11 +84,11 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
     gravity_compensation_controller_effort = include_scoped_launch_py_description(
         pkg_name='pal_sea_arm_controller_configuration',
         paths=['launch', 'gravity_compensation_controller.launch.py'],
-        launch_arguments={"side": '',
-                          "root_link": 'arm_root_link',
-                          "wrist_model": LaunchConfiguration('wrist_model')
+        launch_arguments={'side': '',
+                          'root_link': 'arm_root_link',
+                          'wrist_model': LaunchConfiguration('wrist_model')
                           },
-        condition=UnlessCondition(LaunchConfiguration("is_public_sim"))
+        condition=UnlessCondition(LaunchConfiguration('is_public_sim'))
     )
 
     launch_description.add_action(gravity_compensation_controller_effort)
@@ -96,9 +96,9 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
     input_state_broadcaster = include_scoped_launch_py_description(
         pkg_name='input_state_broadcaster',
         paths=['launch', 'input_state_broadcaster.launch.py'],
-        launch_arguments={"side": '',
-                          "prefix": ''},
-        condition=UnlessCondition(LaunchConfiguration("is_public_sim"))
+        launch_arguments={'side': '',
+                          'prefix': ''},
+        condition=UnlessCondition(LaunchConfiguration('is_public_sim'))
     )
 
     launch_description.add_action(input_state_broadcaster)
@@ -106,7 +106,7 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
     ft_sensor_controller = include_scoped_launch_py_description(
         pkg_name=pkg_name,
         paths=['launch', 'ft_sensor_controller.launch.py'],
-        launch_arguments={"ft_sensor": LaunchConfiguration('ft_sensor')},
+        launch_arguments={'ft_sensor': LaunchConfiguration('ft_sensor')},
         condition=LaunchConfigurationNotEquals('ft_sensor', 'no-ft-sensor'))
 
     launch_description.add_action(ft_sensor_controller)
@@ -122,7 +122,7 @@ def configure_end_effector_controller(context, *args, **kwargs):
     end_effector = read_launch_argument('end_effector', context)
     end_effector_underscore = end_effector.replace('-', '_')
 
-    if end_effector not in ["no-end-effector", "pen-gripper"]:
+    if end_effector not in ['no-end-effector', 'pen-gripper']:
         ee_pkg_name = f'{end_effector_underscore}_controller_configuration'
         ee_launch_file = f'{end_effector_underscore}_controller.launch.py'
 

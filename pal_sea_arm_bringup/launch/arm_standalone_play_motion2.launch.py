@@ -13,17 +13,17 @@
 # limitations under the License.
 
 
+from dataclasses import dataclass
+import os
+
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 
-from launch_pal.include_utils import include_scoped_launch_py_description
 from launch_pal.arg_utils import LaunchArgumentsBase
+from launch_pal.include_utils import include_scoped_launch_py_description
 from launch_pal.robot_arguments import CommonArgs
-from dataclasses import dataclass
-
-import os
 
 
 @dataclass(frozen=True)
@@ -45,8 +45,8 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
         pkg_name='play_motion2',
         paths=['launch', 'play_motion2.launch.py'],
         launch_arguments={
-            "use_sim_time": LaunchConfiguration("use_sim_time"),
-            "motions_file": os.path.join(motions_folder, 'arm_standalone_motions.yaml'),
+            'use_sim_time': LaunchConfiguration('use_sim_time'),
+            'motions_file': os.path.join(motions_folder, 'arm_standalone_motions.yaml'),
             'motion_planner_config': os.path.join(planner_motions_folder, 'motion_planner.yaml')
         })
 

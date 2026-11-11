@@ -12,19 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 import os
 
-from dataclasses import dataclass
 
 from ament_index_python.packages import get_package_share_directory
 from controller_manager.launch_utils import generate_load_controller_launch_description
-from launch_pal.param_utils import parse_parametric_yaml
-from launch_pal.arg_utils import LaunchArgumentsBase, read_launch_argument
+from launch import LaunchContext, LaunchDescription
 from launch.actions import DeclareLaunchArgument, SetLaunchConfiguration
-from launch.actions import LogInfo, OpaqueFunction, GroupAction
+from launch.actions import GroupAction, LogInfo, OpaqueFunction
 from launch.conditions import LaunchConfigurationNotEquals
 from launch.substitutions import LaunchConfiguration
-from launch import LaunchDescription, LaunchContext
+from launch_pal.arg_utils import LaunchArgumentsBase, read_launch_argument
+from launch_pal.param_utils import parse_parametric_yaml
 from pal_sea_arm_description.launch_arguments import SEAArmArgs
 
 DEPRECATION_WARNING = (
@@ -54,8 +54,8 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
         condition=LaunchConfigurationNotEquals('ft_sensor', 'no-ft-sensor')))
 
     launch_controller = GroupAction([generate_load_controller_launch_description(
-        controller_name=LaunchConfiguration("controller_name"),
-        controller_params_file=LaunchConfiguration("controller_config"))],
+        controller_name=LaunchConfiguration('controller_name'),
+        controller_params_file=LaunchConfiguration('controller_config'))],
         condition=LaunchConfigurationNotEquals('ft_sensor', 'no-ft-sensor'))
 
     launch_description.add_action(launch_controller)
@@ -69,16 +69,16 @@ def setup_controller_configuration(context: LaunchContext):
     ft_sensor = read_launch_argument('ft_sensor', context)
     location = read_launch_argument('location', context)
 
-    ft_prefix = "ankle_ft" if location == 'ankle' else "ft_sensor"
-    link_prefix = "ankle" if location == 'ankle' else "wrist"
+    ft_prefix = 'ankle_ft' if location == 'ankle' else 'ft_sensor'
+    link_prefix = 'ankle' if location == 'ankle' else 'wrist'
 
     if side:
-        ft_prefix += f"_{side}"
-        link_prefix += f"_{side}"
+        ft_prefix += f'_{side}'
+        link_prefix += f'_{side}'
 
-    controller_name = f"{ft_prefix}_controller"
-    remappings = {"FT_SIDE_PREFIX": ft_prefix,
-                  "LINK_SIDE_PREFIX": link_prefix}
+    controller_name = f'{ft_prefix}_controller'
+    remappings = {'FT_SIDE_PREFIX': ft_prefix,
+                  'LINK_SIDE_PREFIX': link_prefix}
 
     param_file = os.path.join(
         get_package_share_directory('pal_sea_arm_controller_configuration'),
