@@ -16,8 +16,8 @@ import os
 from pathlib import Path
 
 from ament_index_python.packages import get_package_share_directory
-from pal_sea_arm_description.launch_arguments import SEAArmArgs
 from launch.actions import DeclareLaunchArgument
+from pal_sea_arm_description.launch_arguments import SEAArmArgs
 
 from urdf_test.xacro_test import define_xacro_test
 

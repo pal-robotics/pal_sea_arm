@@ -13,16 +13,16 @@
 # limitations under the License.
 
 
+from dataclasses import dataclass
+
 from launch import LaunchDescription
-from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch.actions import DeclareLaunchArgument, SetLaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch_pal.arg_utils import LaunchArgumentsBase
+from launch_pal.include_utils import include_scoped_launch_py_description
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-from launch_pal.include_utils import include_scoped_launch_py_description
-from launch_pal.arg_utils import LaunchArgumentsBase
 from pal_sea_arm_description.launch_arguments import SEAArmArgs
-
-from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
@@ -45,13 +45,13 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
     robot_state_publisher = include_scoped_launch_py_description(
         pkg_name='pal_sea_arm_description',
         paths=['launch', 'robot_state_publisher.launch.py'],
-        launch_arguments={"end_effector": launch_args.end_effector,
-                          "ft_sensor": launch_args.ft_sensor,
-                          "wrist_model": launch_args.wrist_model,
-                          "arm_type": launch_args.arm_type,
-                          "tool_changer": launch_args.tool_changer,
-                          "limits_v2": launch_args.limits_v2,
-                          "use_sim_time": LaunchConfiguration('use_sim_time')
+        launch_arguments={'end_effector': launch_args.end_effector,
+                          'ft_sensor': launch_args.ft_sensor,
+                          'wrist_model': launch_args.wrist_model,
+                          'arm_type': launch_args.arm_type,
+                          'tool_changer': launch_args.tool_changer,
+                          'limits_v2': launch_args.limits_v2,
+                          'use_sim_time': LaunchConfiguration('use_sim_time')
                           })
 
     launch_description.add_action(robot_state_publisher)

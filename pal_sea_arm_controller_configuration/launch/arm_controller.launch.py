@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 import os
 
-from dataclasses import dataclass
 
 from ament_index_python.packages import get_package_share_directory
 from controller_manager.launch_utils import generate_load_controller_launch_description
-from launch_pal.param_utils import parse_parametric_yaml
-from launch_pal.arg_utils import LaunchArgumentsBase, read_launch_argument
+from launch import LaunchContext, LaunchDescription
 from launch.actions import DeclareLaunchArgument, SetLaunchConfiguration
-from launch.actions import OpaqueFunction, GroupAction
+from launch.actions import GroupAction, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
-from launch import LaunchDescription, LaunchContext
+from launch_pal.arg_utils import LaunchArgumentsBase, read_launch_argument
+from launch_pal.param_utils import parse_parametric_yaml
 from pal_sea_arm_description.launch_arguments import SEAArmArgs
 
 
@@ -42,8 +42,8 @@ def declare_actions(launch_description: LaunchDescription, launch_args: LaunchAr
         function=setup_controller_configuration))
 
     launch_controller = GroupAction([generate_load_controller_launch_description(
-        controller_name=LaunchConfiguration("controller_name"),
-        controller_params_file=LaunchConfiguration("controller_config"))])
+        controller_name=LaunchConfiguration('controller_name'),
+        controller_params_file=LaunchConfiguration('controller_config'))])
 
     launch_description.add_action(launch_controller)
 
@@ -55,12 +55,12 @@ def setup_controller_configuration(context: LaunchContext):
     side = read_launch_argument('side', context)
     wrist_model = read_launch_argument('wrist_model', context)
 
-    arm_prefix = "arm"
+    arm_prefix = 'arm'
     if side:
-        arm_prefix = f"arm_{side}"
+        arm_prefix = f'arm_{side}'
 
-    controller_name = f"{arm_prefix}_controller"
-    remappings = {"ARM_SIDE_PREFIX": arm_prefix}
+    controller_name = f'{arm_prefix}_controller'
+    remappings = {'ARM_SIDE_PREFIX': arm_prefix}
 
     if wrist_model == 'short-wrist':
         filename = 'arm_controller_short_wrist.yaml'

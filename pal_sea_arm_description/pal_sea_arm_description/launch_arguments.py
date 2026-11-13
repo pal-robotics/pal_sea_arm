@@ -14,9 +14,10 @@
 
 
 from dataclasses import dataclass
+
+from ament_index_python.packages import get_package_share_directory
 from launch.actions import DeclareLaunchArgument as DLA
 from launch_pal.arg_utils import parse_launch_args_from_yaml
-from ament_index_python.packages import get_package_share_directory
 
 
 @dataclass(frozen=True)
@@ -24,14 +25,14 @@ class SEAArmArgs:
     """This dataclass contains launch arguments for the pal_sea_arm."""
 
     __robot_name = 'pal_sea_arm'
-    __pkg_dir = get_package_share_directory(f"{__robot_name}_description")
+    __pkg_dir = get_package_share_directory(f'{__robot_name}_description')
     __arg_creator = parse_launch_args_from_yaml(
-        f"{__pkg_dir}/config/{__robot_name}_configuration.yaml")
+        f'{__pkg_dir}/config/{__robot_name}_configuration.yaml')
 
-    arm_type: DLA = __arg_creator.get_argument("arm_type")
-    end_effector: DLA = __arg_creator.get_argument("end_effector")
-    ft_sensor: DLA = __arg_creator.get_argument("ft_sensor")
-    wrist_model: DLA = __arg_creator.get_argument("wrist_model")
-    tool_changer: DLA = __arg_creator.get_argument("tool_changer")
-    torque_estimation: DLA = __arg_creator.get_argument("torque_estimation")
-    limits_v2: DLA = __arg_creator.get_argument("limits_v2")
+    arm_type: DLA = __arg_creator.get_argument('arm_type')
+    end_effector: DLA = __arg_creator.get_argument('end_effector')
+    ft_sensor: DLA = __arg_creator.get_argument('ft_sensor')
+    wrist_model: DLA = __arg_creator.get_argument('wrist_model')
+    tool_changer: DLA = __arg_creator.get_argument('tool_changer')
+    torque_estimation: DLA = __arg_creator.get_argument('torque_estimation')
+    limits_v2: DLA = __arg_creator.get_argument('limits_v2')

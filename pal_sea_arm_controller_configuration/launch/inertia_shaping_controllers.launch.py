@@ -12,22 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dataclasses import dataclass
 import os
+
 from ament_index_python.packages import get_package_share_directory
+from ament_index_python.packages import get_package_share_path
+from ament_index_python.resources import get_resource, get_resources
 from controller_manager.launch_utils import (
     generate_controllers_spawner_launch_description_from_dict
 )
+from launch import LaunchContext, LaunchDescription
+from launch.actions import DeclareLaunchArgument
 from launch.actions import OpaqueFunction
-from launch import LaunchDescription, LaunchContext
 
 from launch_pal.arg_utils import LaunchArgumentsBase, read_launch_argument
-from launch_pal.param_utils import parse_parametric_yaml
-from launch.actions import DeclareLaunchArgument
-from dataclasses import dataclass
-from launch_pal.robot_arguments import CommonArgs
 from launch_pal.calibration_utils import apply_master_calibration
-from ament_index_python.packages import get_package_share_path
-from ament_index_python.resources import get_resource, get_resources
+from launch_pal.param_utils import parse_parametric_yaml
+from launch_pal.robot_arguments import CommonArgs
 import yaml
 
 
@@ -49,37 +50,37 @@ def setup_inertia_shaping_controllers(context: LaunchContext):
 
     side = read_launch_argument('side', context)
 
-    arm_prefix = "arm"
+    arm_prefix = 'arm'
     if side:
-        arm_prefix = f"arm_{side}"
+        arm_prefix = f'arm_{side}'
 
     params_path = os.path.join(
-        get_package_share_directory("pal_sea_arm_controller_configuration"),
+        get_package_share_directory('pal_sea_arm_controller_configuration'),
         'config', 'inertia_shaping_controller'
     )
 
     inertia_shaping_controllers_dict = {}
     for i in range(1, 8):
 
-        controller_name = f"{arm_prefix}_{i}_joint_inertia_shaping_controller"
+        controller_name = f'{arm_prefix}_{i}_joint_inertia_shaping_controller'
 
         # Get the config file based on the actuator type
-        actuator_positon = f"{arm_prefix}_{i}"
+        actuator_positon = f'{arm_prefix}_{i}'
         actuator_type = get_actuator_type(actuator_positon)
 
         if not actuator_type:
-            raise RuntimeError(f"Failed to determine actuator type for {actuator_positon}. "
-                               f"Please ensure sea_data resources exist.")
+            raise RuntimeError(f'Failed to determine actuator type for {actuator_positon}. '
+                               f'Please ensure sea_data resources exist.')
 
         param_file = os.path.join(
-            params_path, f"{actuator_type}_params.yaml"
+            params_path, f'{actuator_type}_params.yaml'
         )
 
         # Calibrate and remap
-        remappings = {"ARM_SIDE_PREFIX": arm_prefix,
-                      "JOINT_POSITION": i,
-                      "ACTUATOR_TYPE": actuator_type,
-                      "PARAMS_PATH": params_path}
+        remappings = {'ARM_SIDE_PREFIX': arm_prefix,
+                      'JOINT_POSITION': i,
+                      'ACTUATOR_TYPE': actuator_type,
+                      'PARAMS_PATH': params_path}
 
         parsed_yaml = parse_parametric_yaml(
             source_files=[param_file], param_rewrites=remappings)
@@ -100,20 +101,20 @@ def setup_inertia_shaping_controllers(context: LaunchContext):
 
 def get_actuator_type(actuator_position: str) -> str:
 
-    resource_type = "sea_data"
+    resource_type = 'sea_data'
     resources = get_resources(resource_type)
     if not resources:
-        return ""
+        return ''
 
     # Take the first resource only
     pkg = next(iter(resources.keys()))
     pkg_share_path = get_package_share_path(pkg)
     sea_data_path = pkg_share_path / get_resource(resource_type, pkg)[0]
-    actuator_sea_data_path = sea_data_path / f"{actuator_position}_actuator"
-    actuator_metadata_path = actuator_sea_data_path / "actuator_metadata.yaml"
+    actuator_sea_data_path = sea_data_path / f'{actuator_position}_actuator'
+    actuator_metadata_path = actuator_sea_data_path / 'actuator_metadata.yaml'
 
     if not actuator_metadata_path.exists():
-        return ""
+        return ''
 
     try:
         with open(actuator_metadata_path, 'r') as file:
@@ -122,9 +123,9 @@ def get_actuator_type(actuator_position: str) -> str:
             if metadata and 'actuator_type' in metadata:
                 return metadata['actuator_type']
     except (yaml.YAMLError, IOError) as e:
-        print(f"Error reading actuator metadata: {e}")
+        print(f'Error reading actuator metadata: {e}')
 
-    return ""
+    return ''
 
 
 def generate_launch_description():

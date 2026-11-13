@@ -13,6 +13,7 @@
 # limitations under the License.
 
 
+from dataclasses import dataclass
 import os
 from pathlib import Path
 
@@ -21,12 +22,11 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction, SetLaunchConfiguration
 from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import Node
-from launch_param_builder import load_xacro
-from launch_pal.arg_utils import read_launch_argument
 from launch_pal.arg_utils import LaunchArgumentsBase
+from launch_pal.arg_utils import read_launch_argument
 from launch_pal.robot_arguments import CommonArgs
-from dataclasses import dataclass
+from launch_param_builder import load_xacro
+from launch_ros.actions import Node
 
 from pal_sea_arm_description.launch_arguments import SEAArmArgs
 
