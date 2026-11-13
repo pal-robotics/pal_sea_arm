@@ -15,6 +15,12 @@ Changelog for package pal_sea_arm_controller_configuration
 * Restructure launch files
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
+Forthcoming
+-----------
+* Automatic flake8
+* Bump cmake_minimum_required to 3.10
+* Contributors: Andrew Hoelscher
+
 2.9.2 (2026-11-05)
 ------------------
 * add dependency for FT sensor broadcaster

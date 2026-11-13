@@ -5,6 +5,11 @@ Changelog for package pal_sea_arm
 1.0.3 (2024-03-22)
 ------------------
 
+Forthcoming
+-----------
+* Bump cmake_minimum_required to 3.10
+* Contributors: Andrew Hoelscher
+
 2.9.2 (2026-11-05)
 ------------------
 

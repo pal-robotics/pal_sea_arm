@@ -23,6 +23,12 @@ Changelog for package pal_sea_arm_description
 * Add arm model check in urdf
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
+Forthcoming
+-----------
+* Automatic flake8
+* Bump cmake_minimum_required to 3.10
+* Contributors: Andrew Hoelscher
+
 2.9.2 (2026-11-05)
 ------------------
 * attach pen-gripper to parent dynamically

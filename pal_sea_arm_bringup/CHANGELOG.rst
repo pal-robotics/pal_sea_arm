@@ -11,6 +11,12 @@ Changelog for package pal_sea_arm_bringup
 * Restructure launch files pal-sea-arm-bringup
 * Contributors: David ter Kuile, davidterkuile
 
+Forthcoming
+-----------
+* Automatic flake8
+* Bump cmake_minimum_required to 3.10
+* Contributors: Andrew Hoelscher
+
 2.9.2 (2026-11-05)
 ------------------
 
