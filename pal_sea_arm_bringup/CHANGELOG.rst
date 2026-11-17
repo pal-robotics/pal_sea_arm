@@ -11,6 +11,11 @@ Changelog for package pal_sea_arm_bringup
 * Restructure launch files pal-sea-arm-bringup
 * Contributors: David ter Kuile, davidterkuile
 
+Forthcoming
+-----------
+* add boxing motion
+* Contributors: susannamastromauro
+
 2.10.0 (2026-11-13)
 -------------------
 * Automatic flake8
