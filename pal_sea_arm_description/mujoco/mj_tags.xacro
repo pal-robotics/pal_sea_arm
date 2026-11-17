@@ -1,31 +1,83 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="pal_sea_arm">
-  
+
     <!-- Actuators -->
-    <xacro:macro name="mj_arm_actuators" params="name arm_type wrist_model joint_reflect">
+    <xacro:macro name="mj_arm_actuators" params="name arm_type wrist_model joint_reflect mj_control">
 
       <xacro:include filename="$(find pal_sea_arm_description)/urdf/arm/arm_limits/${arm_type}/arm.limits.xacro"/>
       <xacro:include filename="$(find pal_sea_arm_description)/urdf/arm/arm_limits/${arm_type}/${wrist_model}.limits.xacro"/>
       <xacro:include filename="$(find pal_sea_arm_description)/urdf/arm/arm_properties/${arm_type}/arm.properties.xacro"/>
       <xacro:include filename="$(find pal_sea_arm_description)/urdf/arm/arm_properties/${arm_type}/${wrist_model}.properties.xacro"/>
 
-      <xacro:if value="${mj_control == 'motor'}">
-        <motor name="${name}_1_joint_torque" joint="${name}_1_joint" ctrlrange="-46 46" />
-        <motor name="${name}_2_joint_torque" joint="${name}_2_joint" ctrlrange="-46 46" />
-        <motor name="${name}_3_joint_torque" joint="${name}_3_joint" ctrlrange="-46 46" />
-        <motor name="${name}_4_joint_torque" joint="${name}_4_joint" ctrlrange="-46 46" />
-        <motor name="${name}_5_joint_torque" joint="${name}_5_joint" ctrlrange="-46 46" />
-        <motor name="${name}_6_joint_torque" joint="${name}_6_joint" ctrlrange="-46 46" />
-        <motor name="${name}_7_joint_torque" joint="${name}_7_joint" ctrlrange="-46 46" />
+        <xacro:if value="${mj_control == 'motor'}">
+          <motor name="${name}_1_joint_motor" joint="${name}_1_joint" ctrllimited="true" ctrlrange="-${arm_1_max_effort} ${arm_1_max_effort}" />
+          <motor name="${name}_2_joint_motor" joint="${name}_2_joint" ctrllimited="true" ctrlrange="-${arm_2_max_effort} ${arm_2_max_effort}" />
+          <motor name="${name}_3_joint_motor" joint="${name}_3_joint" ctrllimited="true" ctrlrange="-${arm_3_max_effort} ${arm_3_max_effort}" />
+          <motor name="${name}_4_joint_motor" joint="${name}_4_joint" ctrllimited="true" ctrlrange="-${arm_4_max_effort} ${arm_4_max_effort}" />
+          <motor name="${name}_5_joint_motor" joint="${name}_5_joint" ctrllimited="true" ctrlrange="-${arm_5_max_effort} ${arm_5_max_effort}" />
+          <xacro:unless value="${wrist_model == 'short-wrist'}">
+            <motor name="${name}_6_joint_motor" joint="${name}_6_joint" ctrllimited="true" ctrlrange="-${arm_6_max_effort} ${arm_6_max_effort}" />
+            <motor name="${name}_7_joint_motor" joint="${name}_7_joint" ctrllimited="true" ctrlrange="-${arm_7_max_effort} ${arm_7_max_effort}" />
+          </xacro:unless>
+        </xacro:if>
+        <xacro:if value="${mj_control == 'position'}">
+          <xacro:if value="${arm_type in ['pal-sea-arm-standalone']}">
+            <position name="${name}_1_joint_position" joint="${name}_1_joint" ctrllimited="false" kp="1000" kv="60" />
+            <position name="${name}_2_joint_position" joint="${name}_2_joint" ctrlrange="${arm_2_joint_lb * deg_to_rad} ${arm_2_joint_ub * deg_to_rad}" kp="1000" kv="60" />
+            <position name="${name}_3_joint_position" joint="${name}_3_joint" ctrllimited="false" kp="1000" kv="30" />
+            <position name="${name}_4_joint_position" joint="${name}_4_joint" ctrlrange="${arm_4_joint_lb * deg_to_rad} ${arm_4_joint_ub * deg_to_rad}" kp="1000"  kv="30"/>
+            <position name="${name}_5_joint_position" joint="${name}_5_joint" ctrllimited="false" kp="1000" kv="12" />
+            <xacro:unless value="${wrist_model == 'short-wrist'}">
+              <position name="${name}_6_joint_position" joint="${name}_6_joint" ctrlrange="${arm_6_joint_lb * deg_to_rad} ${arm_6_joint_ub * deg_to_rad}" kp="1000" kv="8" />
+              <position name="${name}_7_joint_position" joint="${name}_7_joint" ctrlrange="${arm_7_joint_lb * deg_to_rad} ${arm_7_joint_ub * deg_to_rad}" kp="1000"  kv="20"/>
+            </xacro:unless>
+          </xacro:if>
+          <xacro:unless value="${arm_type in ['pal-sea-arm-standalone']}">
+            <position name="${name}_1_joint_position" joint="${name}_1_joint" ctrlrange="${arm_1_joint_lb * deg_to_rad} ${arm_1_joint_ub * deg_to_rad}" kp="1000" kv="60" />
+            <position name="${name}_2_joint_position" joint="${name}_2_joint" ctrlrange="${arm_2_joint_lb * deg_to_rad} ${arm_2_joint_ub * deg_to_rad}" kp="1000" kv="60" />
+            <position name="${name}_3_joint_position" joint="${name}_3_joint" ctrlrange="${arm_3_joint_lb * deg_to_rad} ${arm_3_joint_ub * deg_to_rad}" kp="1000" kv="30" />
+            <position name="${name}_4_joint_position" joint="${name}_4_joint" ctrlrange="${arm_4_joint_lb * deg_to_rad} ${arm_4_joint_ub * deg_to_rad}" kp="1000"  kv="30"/>
+            <position name="${name}_5_joint_position" joint="${name}_5_joint" ctrlrange="${arm_5_joint_lb * deg_to_rad} ${arm_5_joint_ub * deg_to_rad}" kp="1000" kv="12" />
+            <xacro:unless value="${wrist_model == 'short-wrist'}">
+              <position name="${name}_6_joint_position" joint="${name}_6_joint" ctrlrange="${arm_6_joint_lb * deg_to_rad} ${arm_6_joint_ub * deg_to_rad}" kp="1000" kv="8" />
+              <position name="${name}_7_joint_position" joint="${name}_7_joint" ctrlrange="${arm_7_joint_lb * deg_to_rad} ${arm_7_joint_ub * deg_to_rad}" kp="1000"  kv="20"/>
+            </xacro:unless>
+          </xacro:unless>
+        </xacro:if>
+    </xacro:macro>
+
+    <!-- Dynamics -->
+    <xacro:macro name="mj_arm_dynamics" params="name mj_control wrist_model gripper gravcomp">
+      <xacro:property name="mj_motor" value="${mj_control == 'motor'}"/>
+      <modify_element type="joint" name="${name}_1_joint" damping="${12 if mj_motor else 1}" armature="0.050" actuatorgravcomp="${'true' if gravcomp else 'false'}"/>
+      <modify_element type="joint" name="${name}_2_joint" damping="${10 if mj_motor else 1}" armature="0.072" actuatorgravcomp="${'true' if gravcomp else 'false'}"/>
+      <modify_element type="joint" name="${name}_3_joint" damping="${4 if mj_motor else 1}" armature="0.050" actuatorgravcomp="${'true' if gravcomp else 'false'}"/>
+      <modify_element type="joint" name="${name}_4_joint" damping="${4 if mj_motor else 1}" armature="0.050" actuatorgravcomp="${'true' if gravcomp else 'false'}"/>
+      <modify_element type="joint" name="${name}_5_joint" damping="${4 if mj_motor else 1}" armature="0.050" actuatorgravcomp="${'true' if gravcomp else 'false'}"/>
+      <xacro:unless value="${wrist_model == 'short-wrist'}">
+        <modify_element type="joint" name="${name}_6_joint" damping="${4 if mj_motor else 1}" armature="0.0102" actuatorgravcomp="${'true' if gravcomp else 'false'}"/>
+        <modify_element type="joint" name="${name}_7_joint" damping="${4 if mj_motor else 1}" armature="0.0204" actuatorgravcomp="${'true' if gravcomp else 'false'}"/>
+      </xacro:unless>
+      <xacro:if value="${gravcomp}">
+        <modify_element type="body" name="${name}_1_link" gravcomp="1"/>
+        <modify_element type="body" name="${name}_2_link" gravcomp="1"/>
+        <modify_element type="body" name="${name}_3_link" gravcomp="1"/>
+        <modify_element type="body" name="${name}_4_link" gravcomp="1"/>
+        <modify_element type="body" name="${name}_5_link" gravcomp="1"/>
+        <xacro:unless value="${wrist_model == 'short-wrist'}">
+          <modify_element type="body" name="${name}_6_link" gravcomp="1"/>
+          <modify_element type="body" name="${name}_7_link" gravcomp="1"/>
+        </xacro:unless>
+        <xacro:unless value="${gripper == ''}">
+          <modify_element type="body" name="${gripper}_base_link" gravcomp="1"/>
+        </xacro:unless>
       </xacro:if>
-      <xacro:if value="${mj_control == 'position'}">
-        <position name="${name}_1_joint_position" joint="${name}_1_joint" ctrlrange="${arm_1_joint_lb * deg_to_rad} ${arm_1_joint_ub * deg_to_rad}" kp="1000" kv="50"/>
-        <position name="${name}_2_joint_position" joint="${name}_2_joint" ctrlrange="${arm_2_joint_lb * deg_to_rad} ${arm_2_joint_ub * deg_to_rad}" kp="1000" kv="60"/>
-        <position name="${name}_3_joint_position" joint="${name}_3_joint" ctrlrange="${arm_3_joint_lb * deg_to_rad} ${arm_3_joint_ub * deg_to_rad}" kp="1000" kv="50"/>
-        <position name="${name}_4_joint_position" joint="${name}_4_joint" ctrlrange="${arm_4_joint_lb * deg_to_rad} ${arm_4_joint_ub * deg_to_rad}" kp="500" kv="20"/>
-        <position name="${name}_5_joint_position" joint="${name}_5_joint" ctrlrange="${arm_5_joint_lb * deg_to_rad} ${arm_5_joint_ub * deg_to_rad}" kp="1000" kv="20"/>
-        <position name="${name}_6_joint_position" joint="${name}_6_joint" ctrlrange="${arm_6_joint_lb * deg_to_rad} ${arm_6_joint_ub * deg_to_rad}" kp="1000" kv="20"/>
-        <position name="${name}_7_joint_position" joint="${name}_7_joint" ctrlrange="${arm_7_joint_lb * deg_to_rad} ${arm_7_joint_ub * deg_to_rad}" kp="500" kv="20"/>
-      </xacro:if>
+    </xacro:macro>
+
+    <!-- Contact -->
+    <xacro:macro name="mj_arm_contact" params="name wrist_model">
+      <xacro:unless value="${wrist_model == 'short-wrist'}">
+        <exclude body1="${name}_5_link" body2="${name}_7_link"/>
+      </xacro:unless>
     </xacro:macro>
 </robot>

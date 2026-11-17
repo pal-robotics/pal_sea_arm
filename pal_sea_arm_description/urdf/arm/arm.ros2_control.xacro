@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- 
+<!--
   Copyright (c) 2024 PAL Robotics S.L. All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,25 +15,17 @@
   limitations under the License.
  -->
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="ros2_control_arm" params="name reduction offset_value use_sea_transmission:=false sim_type:=gazebo">
+  <xacro:macro name="ros2_control_arm" params="name reduction offset_value use_sea_transmission:=false sim_type:=^|gazebo">
     <joint name="${name}_joint">
-      <xacro:if value="${sim_type == 'mujoco-ros2-control'}">
-        <param name="position_kp">700</param>
-        <param name="position_ki">1</param>
-        <param name="position_kd">10</param>
-        <param name="position_i_max">0</param>
-        <command_interface name="position_pid" />
-      </xacro:if>
+      <command_interface name="position" />
       <xacro:if value="${sim_type != 'mujoco-ros2-control'}">
-        <command_interface name="position" />
-      </xacro:if>
-      
-      <!-- TODO: Remove when moving to Gazebo Harmonic or ROS 2 Jazzy -->
-      <!-- Multiple command interfaces not working on Gazebo Fortress -->
-      <!-- https://github.com/ros-controls/gz_ros2_control/issues/182 -->
-      <xacro:if value="${gazebo_version == 'classic'}">
-        <command_interface name="velocity" />
-        <command_interface name="effort" />
+        <!-- TODO: Remove when moving to Gazebo Harmonic or ROS 2 Jazzy -->
+        <!-- Multiple command interfaces not working on Gazebo Fortress -->
+        <!-- https://github.com/ros-controls/gz_ros2_control/issues/182 -->
+        <xacro:if value="${gazebo_version == 'classic'}">
+          <command_interface name="velocity" />
+          <command_interface name="effort" />
+        </xacro:if>
       </xacro:if>
 
       <state_interface name="position" />
@@ -41,24 +33,21 @@
       <state_interface name="effort" />
 
       <!-- SEA specific joint interfaces -->
-      <xacro:if value="${use_sea_transmission and sim_type != 'mujoco-ros2-control'}">
+      <xacro:if value="${use_sea_transmission}">
         <state_interface name="torque"/>
         <state_interface name="absolute_position"/>
       </xacro:if>
-
     </joint>
 
     <xacro:include filename="$(find pal_sea_arm_description)/ros2_control/transmissions.urdf.xacro" />
 
-    <xacro:if value="${sim_type != 'mujoco-ros2-control'}">
-      <xacro:if value="${use_sea_transmission}">
-        <!-- Reduction needed for the torque estimation -->
-        <xacro:sea_transmission name="${name}" reduction="${reduction}" offset_value="${offset_value}" />
-      </xacro:if>
-      <xacro:unless value="${use_sea_transmission}">
-        <!-- Reduction already applied in the RT layer, harcoded here to 1.0 -->
-        <xacro:simple_transmission name="${name}" reduction="1.0" offset_value="${offset_value}" />
-      </xacro:unless>
+    <xacro:if value="${use_sea_transmission}">
+      <!-- Reduction needed for the torque estimation -->
+      <xacro:sea_transmission name="${name}" reduction="${reduction}" offset_value="${offset_value}" sim_type="${sim_type}" />
     </xacro:if>
+    <xacro:unless value="${use_sea_transmission}">
+      <!-- Reduction already applied in the RT layer, harcoded here to 1.0 -->
+      <xacro:simple_transmission name="${name}" reduction="1.0" offset_value="${offset_value}" sim_type="${sim_type}" />
+    </xacro:unless>
   </xacro:macro>
 </robot>

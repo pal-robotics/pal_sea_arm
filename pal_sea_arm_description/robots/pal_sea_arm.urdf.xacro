@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- 
+<!--
   Copyright (c) 2024 PAL Robotics S.L. All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,9 +42,16 @@
   <xacro:arg name="namespace" default=""/>
   <xacro:arg name="gazebo_version" default="classic"/>
 
-  <!-- Mujoco args -->
+  <!-- mujoco-ros2-control, mujoco, gazebo-->
   <xacro:arg name="sim_type" default="gazebo" />
+
+  <!-- false, position, motor -->
   <xacro:arg name="mj_control" default="false" />
+
+  <!-- MuJoCo gravity compensation of the arm (true, false). -->
+  <xacro:arg name="mj_gravcomp" default="true" />
+
+  <!-- floor -->
   <xacro:arg name="world_name" default="floor" />
 
   <!-- Limits v2-->
@@ -61,8 +68,9 @@
   <xacro:property name="gazebo_version" value="$(arg gazebo_version)"/>
   <xacro:property name="limits_v2" value="$(arg limits_v2)"/>
 
-  <xacro:property name="sim_type" value="$(arg sim_type)" /> 
+  <xacro:property name="sim_type" value="$(arg sim_type)" />
   <xacro:property name="mj_control" value="$(arg mj_control)"/>
+  <xacro:property name="mj_gravcomp" value="$(arg mj_gravcomp)"/>
   <xacro:property name="world_name" value="$(arg world_name)"/>
 
   <xacro:if value="${end_effector not in ['no-end-effector', 'pal-pro-gripper', 'allegro-hand', 'custom', 'pen-gripper']}">
@@ -77,6 +85,22 @@
   <xacro:if value="${arm_type not in ['pal-sea-arm-standalone', 'tiago-pro', 'tiago-pro-s',  'tiago-sea', 'tiago-sea-dual']}">
     <xacro:wrong_arm_type/>
   </xacro:if>
+
+  <!-- Properties check -->
+  <xacro:if value="${sim_type not in ['mujoco-ros2-control', 'mujoco', 'gazebo']}">
+    <xacro:wrong_sim_type />
+  </xacro:if>
+  <xacro:if value="${sim_type in ['mujoco-ros2-control', 'mujoco'] and end_effector not in ['no-end-effector', 'pal-pro-gripper']}">
+    <xacro:incompatible_end_effector_for_mujoco />
+  </xacro:if>
+  <xacro:if value="${sim_type in ['mujoco-ros2-control', 'mujoco'] and arm_type not in ['pal-sea-arm-standalone', 'tiago-pro', 'tiago-pro-s']}">
+    <xacro:incompatible_arm_type_for_mujoco />
+  </xacro:if>
+
+  <xacro:unless value="$(arg use_sim_time)">
+    <xacro:property name="sim_type" value="gazebo" />
+  </xacro:unless>
+
 
   <!-- Compatibility check within TC and ft sensors-->
   <!-- <xacro:if value="${ft_sensor == 'rokubi' and wrist_model=='spherical-wrist'}">
@@ -116,9 +140,9 @@
   <link name="world"></link>
 
   <joint name="base_joint" type="fixed">
-    <origin xyz="0 0 -0.08" rpy="0 0 0"/>
+    <origin xyz="0 0 ${0.0 if sim_type in ['mujoco-ros2-control', 'mujoco'] else -0.08}" rpy="0 0 0"/>
     <parent link="world"/>
-    <child link="base_link"/>        
+    <child link="base_link"/>
   </joint>
 
   <link name="base_link">
@@ -179,46 +203,13 @@
   <!-- End effector -->
   <xacro:pal_sea_arm_end_effector name="gripper" parent="${end_effector_link}" type="${end_effector}" tool_changer="${tool_changer}" reflect="1"/>
 
-  <xacro:if value="${sim_type == 'mujoco' or sim_type == 'mujoco-ros2-control'}">
-
-
-    <mujoco> 
-      <!-- Mujoco Includes -->
-      <xacro:include filename="$(find pal_sea_arm_description)/mujoco/mj_tags.xacro" />
-      <xacro:include filename="$(find pal_pro_gripper_description)/mujoco/mj_tags.xacro" />
-      <xacro:include filename="$(find pal_mujoco_scenes)/scenes/${world_name}.xacro" />
-
-       <!-- Mujoco environment -->
-      <xacro:mj_common light_target="arm_1_link"/>
-
-      <!-- Actuator-->
-      <xacro:if value="${sim_type == 'mujoco'}">
-        <actuator>
-          <!-- Arm -->
-          <xacro:mj_arm_actuators name="arm" arm_type="${arm_type}" wrist_model="${wrist_model}" joint_reflect="1"/>
-          <xacro:if value="${has_end_effector}">
-            <!-- End-effector -->
-            <xacro:mj_gripper_actuators name="gripper"/>
-          </xacro:if>
-        </actuator>
-
-      </xacro:if>
-
-      <xacro:if value="${has_end_effector}">
-          <!-- Equality-->
-        <equality>
-          <xacro:mj_gripper_equality name="gripper" anchor_r="0.014 -0.0015 0" anchor_l="0.014 -0.001 0"/>
-        </equality>
-        
-        <!-- Contact-->
-        <contact>
-          <xacro:mj_gripper_contact name="gripper"/>
-        </contact>
-      </xacro:if>
-    </mujoco>  
+  <!-- MUJOCO   -->
+  <xacro:if value="${sim_type in ['mujoco', 'mujoco-ros2-control']}">
+    <xacro:pal_sea_arm_mj world_name="${world_name}" mj_control="${mj_control}" has_end_effector="${has_end_effector}"/>
   </xacro:if>
 
   <!-- ROS2 control -->
-  <xacro:pal_sea_arm_ros2_control use_sim_time="$(arg use_sim_time)" torque_estimation="${torque_estimation}" gazebo_version="${gazebo_version}"/>
-
+  <xacro:if value="${sim_type != 'mujoco'}">
+    <xacro:pal_sea_arm_ros2_control use_sim_time="$(arg use_sim_time)" torque_estimation="${torque_estimation}" sim_type="${sim_type}" gazebo_version="${gazebo_version}"/>
+  </xacro:if>
 </robot>

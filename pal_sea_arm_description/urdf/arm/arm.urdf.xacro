@@ -56,7 +56,7 @@
 
     <!-- ARM DEFINITION -->
     <xacro:property name="joint_type" value="${'continuous' if arm_type == 'pal-sea-arm-standalone' else 'revolute'}" />
-    
+
     <!-- ARM 1 LINK -->
     <link name="${name}_1_link">
       <xacro:inertial_link_1 reflect="${reflect}"/>
@@ -77,8 +77,8 @@
 
     <!-- ARM 1 JOINT -->
     <joint name="${name}_1_joint" type="${joint_type}">
-      
-      <xacro:insert_block name="origin"/>      
+
+      <xacro:insert_block name="origin"/>
       <parent link="${parent}" />
       <child link="${name}_1_link" />
       <axis xyz="0 0 1" />
@@ -86,7 +86,7 @@
       <xacro:if value="${joint_type == 'continuous'}">
         <limit effort="${arm_1_max_effort}" velocity="${arm_1_max_velocity}" />
       </xacro:if>
-      
+
       <xacro:if value="${joint_type == 'revolute'}">
         <xacro:if value="${limits_v2}">
           <limit lower="${arm_1_joint_lb_v2 * deg_to_rad}" upper="${arm_1_joint_ub_v2 * deg_to_rad}" effort="${arm_1_max_effort}" velocity="${arm_1_max_velocity}" />
@@ -155,7 +155,7 @@
       <parent link="${name}_2_link" />
       <child link="${name}_3_link" />
       <axis xyz="0 0 1" />
-    
+
       <xacro:if value="${joint_type == 'continuous'}">
         <limit effort="${arm_3_max_effort}" velocity="${arm_3_max_velocity}" />
       </xacro:if>
@@ -228,7 +228,7 @@
       <parent link="${name}_4_link" />
       <child link="${name}_5_link" />
       <axis xyz="0 0 1" />
-  
+
       <xacro:if value="${joint_type == 'continuous'}">
         <limit effort="${arm_5_max_effort}" velocity="${arm_5_max_velocity}" />
       </xacro:if>
@@ -243,7 +243,7 @@
           <safety_controller k_position="${arm_k_position}" k_velocity="${arm_k_velocity}" soft_lower_limit="${arm_5_joint_lb * deg_to_rad  + arm_eps}" soft_upper_limit="${arm_5_joint_ub * deg_to_rad - arm_eps}" />
         </xacro:unless>
       </xacro:if>
-  
+
       <dynamics friction="${arm_friction}" damping="${arm_damping}"/>
     </joint>
 
@@ -419,4 +419,99 @@
     </gazebo>
 
   </xacro:macro>
+
+  <xacro:macro name="pal_sea_arm_mj" params="mj_control world_name has_end_effector">
+    <!-- Mujoco Includes -->
+    <xacro:include filename="$(find pal_sea_arm_description)/mujoco/mj_tags.xacro" />
+    <xacro:include filename="$(find pal_pro_gripper_description)/mujoco/mj_tags.xacro" />
+    <xacro:include filename="$(find pal_mujoco_scenes)/scenes/${world_name}.xacro" />
+
+    <mujoco_inputs>
+      <!-- Mujoco environment -->
+      <scene>
+        <xacro:mj_scene/>
+      </scene>
+
+      <raw_inputs>
+        <!-- Actuator-->
+        <actuator>
+          <!-- Arm -->
+          <xacro:mj_arm_actuators name="arm" arm_type="${arm_type}" wrist_model="${wrist_model}" joint_reflect="1" mj_control="${mj_control}"/>
+          <xacro:if value="${has_end_effector}">
+            <!-- End-effector -->
+            <xacro:mj_gripper_actuators name="gripper" mj_control="${mj_control}"/>
+          </xacro:if>
+        </actuator>
+
+        <xacro:if value="${has_end_effector}">
+          <!-- Equality-->
+          <equality>
+            <xacro:mj_gripper_equality name="gripper"/>
+          </equality>
+        </xacro:if>
+
+        <!-- Contact-->
+        <contact>
+          <exclude body1="arm_root_link" body2="arm_1_link"/>
+          <xacro:mj_arm_contact name="arm" wrist_model="${wrist_model}"/>
+          <xacro:if value="${has_end_effector}">
+            <xacro:mj_gripper_contact name="gripper"/>
+          </xacro:if>
+        </contact>
+
+        <default>
+          <default class="visual">
+            <geom group="2" type="mesh" contype="0" conaffinity="0"/>
+          </default>
+          <default class="collision">
+            <geom group="3" type="mesh" density="0"/>
+          </default>
+        </default>
+
+        <!-- FT-Sensor -->
+         <xacro:if value="${has_ft_sensor}">
+          <sensor>
+            <force name="wrist_ft_sensor_force" site="arm_tool_link"/>
+            <torque name="wrist_ft_sensor_torque" site="arm_tool_link"/>
+          </sensor>
+        </xacro:if>
+      </raw_inputs>
+
+      <processed_inputs>
+        <!-- Specifying decompose_mesh will set the `decompose` flag when using obj2mjcf -->
+        <!-- <decompose_mesh mesh_name="{mesh_name}" threshold=" {threshold_value}"/> -->
+
+        <!-- The camera with the specified values will be added at the specified site name. -->
+        <!-- The position and quaterinion will be filled in by the converter -->
+        <!-- <camera site="{site_name}" name="{camera_name}" fovy="{fovy_value}" mode="{mode_type}" resolution="{resolution values}"/> -->
+
+        <!-- Adds a lidar tag below a site tag to support a lidar sensor. -->
+        <!-- In the URDF, we assume that that the sensor frame has the Z-axis pointed directly up in the sensor -->
+        <!-- frame. This tag will create rangefinders in the MJCF between min_angle and max_angle at each -->
+        <!-- angle_increment rotated about the replicate frame's Y axis. The hardware intercface then combines -->
+        <!-- them into a single LaserScan message. -->
+        <!-- <lidar ref_site="{link_name}" sensor_name="{sensor_name}" min_angle="{min_angle_value}" max_angle="{max_angle_value}" angle_increment="{angle_increment_value}" /> -->
+
+        <!-- The element with the type and name as listed below will be modified with the remaining attributes -->
+        <!-- If the attribute already existed, it will be overwritten -->
+        <!-- Note that the type and name elements are required -->
+        <xacro:if value="${has_end_effector}">
+          <modify_element type="joint" name="gripper_outer_finger_left_joint" actuatorfrcrange="-8 8"/>
+          <modify_element type="joint" name="gripper_outer_finger_right_joint" actuatorfrcrange="-8 8"/>
+          <modify_element type="joint" name="gripper_inner_finger_left_joint" actuatorfrcrange="-8 8"/>
+          <modify_element type="joint" name="gripper_finger_right_joint" actuatorfrcrange="-8 8"/>
+          <modify_element type="joint" name="gripper_fingertip_left_joint" actuatorfrcrange="-8 8"/>
+          <modify_element type="joint" name="gripper_fingertip_right_joint" actuatorfrcrange="-8 8"/>
+          <modify_element type="joint" name="gripper_finger_joint" actuatorfrcrange="-8 8" damping="1.5"/>
+
+          <modify_element type="geom" mesh="fingertip" class="collision"
+                  friction="1.0 0.1 0.005" condim="6" solref="0.001 1" solimp="0.95 0.99 0.001"/>
+        </xacro:if>
+
+        <xacro:mj_arm_dynamics name="arm" mj_control="${mj_control}" wrist_model="${wrist_model}" gripper="${'gripper' if has_end_effector else ''}" gravcomp="${mj_gravcomp}"/>
+
+      </processed_inputs>
+    </mujoco_inputs>
+  </xacro:macro>
+
 </robot>
