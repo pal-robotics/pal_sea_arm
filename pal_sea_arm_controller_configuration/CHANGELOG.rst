@@ -15,6 +15,11 @@ Changelog for package pal_sea_arm_controller_configuration
 * Restructure launch files
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
+Forthcoming
+-----------
+* first align to mujoco-ros2-ros2_control
+* Contributors: Ortisa Poci
+
 2.10.1 (2026-11-17)
 -------------------
 

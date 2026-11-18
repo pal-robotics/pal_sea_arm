@@ -23,6 +23,39 @@ Changelog for package pal_sea_arm_description
 * Add arm model check in urdf
 * Contributors: David ter Kuile, Noel Jimenez, davidterkuile
 
+Forthcoming
+-----------
+* remove anchor params
+* distinguish heigh to spawn the model in mj and gazebo
+* add arm dynamics and distinguish wrist type
+  and
+* exclude contacts between arm_root_link and arm_1_link
+* remove the check of existence of mujoco scene
+* exclude contact betwee arm_5_link and arm_7_link
+* restrict the MuJoCo scene fallback to pal_office
+* fall back to floor for missing MuJoCo scenes
+* change the order of the mujoco actuators
+* add the 7-th motor actuator to the mujoco model
+* add always damping for the joints of the arm
+* add ft sensor in mujoco-ros2-control
+* add friction to gripper for grasping
+* add 0 density for collision geoms
+* add arm-standalone compatibility
+* pass the arg has_end_effector as parameter
+* add check of types of arm and gripper for mj
+* add and fix transmission to be compatible with mj
+* add sim_type argument for ros2-control tags
+* move mj tags in arm.urdf.xacro
+* add check for the sim_type argument
+* added sim_type as parameter
+* fixed default sim_type
+* restored kv for mujoco actuators
+* added pids for mujoco simulation
+* updated names for mujoco actuators
+* added meshed for the support of the cameras
+* first align to mujoco-ros2-ros2_control
+* Contributors: Ortisa Poci
+
 2.10.1 (2026-11-17)
 -------------------
 
